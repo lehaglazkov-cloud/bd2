@@ -133,6 +133,25 @@
             display: block;
         }
 
+        .start-btn {
+            background: linear-gradient(45deg, var(--accent-green), #00b344);
+            color: #0d1117;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
+            transition: transform 0.2s ease;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+        }
+
         .next-btn {
             background: linear-gradient(45deg, var(--accent-purple), #6a0dad);
             color: white;
@@ -249,14 +268,17 @@
         <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Проблема -->
-    <div class="problem-statement" id="problemStatement">
-        <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
-        <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання теорії, яка стане зброєю у практичному симуляторі! Дійте! 🖥️</p>
+    <!-- Проблема та старт -->
+    <div id="startScreen">
+        <div class="problem-statement" id="problemStatement">
+            <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
+            <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання теорії, яка стане зброєю у практичному симуляторі! Дійте! 🖥️</p>
+        </div>
+        <button class="start-btn" onclick="startQuest()">Розпочати квест 🚀</button>
     </div>
 
     <!-- КАРТКИ ЕТАПІВ БУДУТЬ ГЕНЕРУВАТИСЯ С КРИПТОМ -->
-    <div id="questBox"></div>
+    <div id="questBox" style="display: none;"></div>
 
     <!-- Фініш -->
     <div class="step-card" id="finish-card">
@@ -295,12 +317,3 @@
                 "www.site."
             ],
             correct: 2,
-            explanation: "Супер! Саме протокол HTTPS шифрує трафік. Якщо сайт працює на старій версії HTTP, зловмисник у тій же мережі Wi-Fi легко прочитає ваші дані як відкритий текст."
-        },
-        {
-            type: "simulation",
-            title: "Етап 3: Симулятор вхідної пошти 📨 [СПАМ-ФІЛЬТР]",
-            theory: "📖 ТЕОРІЯ-КЛЮЧ: Фішинг — це спроба виманити паролі чи гроші під виглядом офіційних брендів. Спам-розсилки часто тиснуть на емоції (паніка, виграш), містять підозрілі адреси відправників (наприклад, недійсні домени) та заклики негайно перейти за лінком.",
-            isSpam: true,
-            sender: "безпека-приват24 <security-update-alert@net-banking-verify-ua.com>",
-            subject: "⚠️ ТЕРМІНОВО: Ваш рахунок заблоковано!",
