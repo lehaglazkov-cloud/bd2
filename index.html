@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Cyber Quest: Алгоритмічний тренажер</title>
-    <!-- Brython для запуску Python в браузері -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.0/brython.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.12.0/brython_stdlib.min.js"></script>
+    <title>CyberShield: Кібер-Квест 11 Клас</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --container-bg: #161b22;
-            --accent-color: #58a6ff;
-            --success-color: #2ea44f;
-            --error-color: #f85149;
+            --card-bg: #161b22;
+            --accent-green: #00ff66;
+            --accent-purple: #8a2be2;
             --text-color: #c9d1d9;
             --text-muted: #8b949e;
-            --border-color: #30363d;
-            --code-bg: #010409;
+            --danger: #ff4757;
         }
 
         body {
@@ -31,495 +26,282 @@
             align-items: center;
         }
 
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
         header {
             text-align: center;
-            margin-bottom: 30px;
-            max-width: 900px;
+            margin-bottom: 40px;
+            border-bottom: 2px dashed var(--accent-purple);
+            padding-bottom: 20px;
         }
 
-        header h1 {
-            color: var(--accent-color);
-            margin-bottom: 10px;
+        h1 {
+            color: var(--accent-green);
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
             font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        header p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
+        .problem-statement {
+            background: #21262d;
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 30px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            background-color: var(--container-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 8px;
             padding: 25px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-        }
-
-        .tabs {
-            display: flex;
-            gap: 10px;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .step-title {
+            color: var(--accent-purple);
+            font-size: 1.4rem;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #30363d;
             padding-bottom: 10px;
-            overflow-x: auto;
         }
 
-        .tab-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            padding: 10px 20px;
-            font-size: 1rem;
-            cursor: pointer;
+        .theory-box {
+            background: #0d1117;
+            padding: 15px;
             border-radius: 6px;
-            transition: all 0.3s;
-            white-space: nowrap;
+            border-left: 3px solid var(--accent-green);
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
-        .tab-btn:hover {
-            background-color: rgba(88, 166, 255, 0.1);
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .option-btn {
+            background: #21262d;
+            border: 1px solid #30363d;
             color: var(--text-color);
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            transition: all 0.2s ease;
         }
 
-        .tab-btn.active {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: bold;
+        .option-btn:hover:not(:disabled) {
+            background: #30363d;
+            border-color: var(--accent-purple);
         }
 
-        .task-panel {
+        .option-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
             display: none;
+            line-height: 1.5;
         }
 
-        .task-panel.active {
+        .feedback.correct {
+            background: rgba(0, 255, 102, 0.1);
+            border: 1px solid var(--accent-green);
+            color: #00ff66;
             display: block;
         }
 
-        .task-description {
-            background-color: rgba(88, 166, 255, 0.05);
-            border-left: 4px solid var(--accent-color);
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 20px;
+        .feedback.wrong {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            display: block;
         }
 
-        .task-description h3 {
-            margin-top: 0;
-            color: var(--accent-color);
-        }
-
-        .workspace {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .workspace {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .editor-section, .output-section {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .section-title {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        textarea.code-editor {
-            width: 100%;
-            height: 250px;
-            background-color: var(--code-bg);
-            color: #79c0ff;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1rem;
-            resize: vertical;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        textarea.code-editor:focus {
-            border-color: var(--accent-color);
-        }
-
-        .controls {
-            margin-top: 15px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn {
-            padding: 12px 24px;
+        .next-btn {
+            background: linear-gradient(45deg, var(--accent-purple), #6a0dad);
+            color: white;
             border: none;
-            border-radius: 6px;
+            padding: 12px 30px;
             font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
             cursor: pointer;
-            font-weight: 6px;
-            transition: opacity 0.2s;
+            margin-top: 20px;
+            display: none;
+            float: right;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
         }
 
-        .btn:hover {
+        .next-btn:hover {
             opacity: 0.9;
         }
 
-        .btn-run {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: bold;
-        }
-
-        .btn-check {
-            background-color: var(--success-color);
-            color: white;
-            font-weight: bold;
-        }
-
-        .console-output {
-            background-color: var(--code-bg);
-            border: 1px solid var(--border-color);
+        /* Симулятор пошти */
+        .email-simulator {
+            background: #1f242c;
+            border: 1px solid #3f4754;
             border-radius: 8px;
-            padding: 15px;
-            flex-grow: 1;
-            min-height: 150px;
-            font-family: 'Courier New', Courier, monospace;
-            white-space: pre-wrap;
-            color: #e6edf3;
-            overflow-y: auto;
-        }
-
-        .result-badge {
+            overflow: hidden;
             margin-top: 15px;
-            padding: 15px;
-            border-radius: 8px;
-            display: none;
-            font-weight: bold;
-            align-items: center;
-            gap: 10px;
         }
 
-        .result-badge.success {
-            display: flex;
-            background-color: rgba(46, 164, 79, 0.15);
-            border: 1px solid var(--success-color);
-            color: #56d364;
-        }
-
-        .result-badge.error {
-            display: flex;
-            background-color: rgba(248, 81, 73, 0.15);
-            border: 1px solid var(--error-color);
-            color: #ffa198;
-        }
-
-        .mock-input-zone {
-            background-color: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 10px;
-            border: 1px dashed var(--border-color);
+        .email-header {
+            background: #2d333b;
+            padding: 12px;
+            border-bottom: 1px solid #3f4754;
             font-size: 0.9rem;
+        }
+
+        .email-body {
+            padding: 20px;
+            background: #181c22;
+            min-height: 120px;
+        }
+
+        .email-meta {
+            margin-bottom: 5px;
+        }
+
+        .email-meta span {
+            color: var(--text-muted);
+        }
+
+        .sim-actions {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            background: #1f242c;
+            border-top: 1px solid #3f4754;
+        }
+
+        .action-btn-good {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .action-btn-spam {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #21262d;
+            border-radius: 3px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-green);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        #finish-card {
+            text-align: center;
+            display: none;
         }
     </style>
 </head>
-<body onload="brython()">
+<body>
 
+<div class="container">
     <header>
-        <h1>🐍 Python Cyber Quest</h1>
-        <p>Допоможи кібер-детективу вирішити практичні життєві кейси за допомогою коду. Ніякої нудної теорії — тільки чиста практика! 🚀</p>
+        <h1>⚡ CyberShield v2.0 ⚡</h1>
+        <p>Інтерактивний квест з інформаційної безпеки для 11-х класів</p>
     </header>
 
-    <div class="container">
-        <!-- Вкладки завдань -->
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTask(0)">🛒 1. Каса (Введення-Виведення)</button>
-            <button class="tab-btn" onclick="switchTask(1)">🛡️ 2. Фейсконтроль (Умови)</button>
-            <button class="tab-btn" onclick="switchTask(2)">📊 3. Крок за Кроком (Цикли)</button>
-            <button class="tab-btn" onclick="switchTask(3)">🎒 4. Рюкзак (Списки)</button>
-            <button class="tab-btn" onclick="switchTask(4)">📦 5. Фабрика (Функції)</button>
-        </div>
-
-        <!-- ЗАВДАННЯ 1: Введення-Виведення -->
-        <div id="task-0" class="task-panel active">
-            <div class="task-description">
-                <h3>Завдання: Розумна каса магазину 🛒</h3>
-                <p><b>Контекст:</b> Ти автоматизуєш касу самообслуговування. Програма має запитати назву товару, його ціну та кількість, а потім вивести гарний фіскальний чек із загальною вартістю.</p>
-                <p><b>Вимоги:</b> Зчитай ім'я (рядок), ціну (число з рухомою комою або ціле) та кількість (ціле число). Виведи рядок у форматі: <code>Товар: [назва], Разом: [ціна * кількість] грн</code></p>
-            </div>
-            <div class="workspace">
-                <div class="editor-section">
-                    <div class="section-title">💻 Твій код на Python:</div>
-                    <div class="mock-input-zone">ℹ️ Для тестування будуть використані значення: Назва="Яблуко", Ціна=30, Кількість=3</div>
-                    <textarea id="code-0" class="code-editor"># Зчитай дані за допомогою input()
-# Нагадування: input() повертає рядок. Перетвори типи за допомогою int() або float()
-
-name = input()
-price = float(input())
-count = int(input())
-
-# Обчисли суму та виведи результат точно за шаблоном:
-</textarea>
-                    <div class="controls">
-                        <button class="btn btn-run" onclick="runCode(0)">⚡ Запустити</button>
-                        <button class="btn btn-check" onclick="checkCode(0)">✅ Перевірити</button>
-                    </div>
-                </div>
-                <div class="output-section">
-                    <div class="section-title">🖥️ Консоль виведення:</div>
-                    <div id="output-0" class="console-output"></div>
-                    <div id="badge-0" class="result-badge"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ЗАВДАННЯ 2: Умови -->
-        <div id="task-1" class="task-panel">
-            <div class="task-description">
-                <h3>Завдання: Кібер-Фейсконтроль 🛡️</h3>
-                <p><b>Контекст:</b> Робот-охоронець пропускає у секретну лабораторію тільки повнолітніх (від 18 років), які знають секретний пароль <code>"AI2026"</code>.</p>
-                <p><b>Вимоги:</b> Програма зчитує вік (ціле число) та пароль (рядок). Якщо вік 18 або більше І пароль правильний, виведи <code>"Доступ дозволено"</code>. В іншому випадку виведи <code>"Доступ заборонено"</code>.</p>
-            </div>
-            <div class="workspace">
-                <div class="editor-section">
-                    <div class="section-title">💻 Твій код на Python:</div>
-                    <div class="mock-input-zone">ℹ️ Тест-кейс: Вік=19, Пароль="AI2026"</div>
-                    <textarea id="code-1" class="code-editor">age = int(input())
-password = input()
-
-# Напиши умовну конструкцію if-else
-</textarea>
-                    <div class="controls">
-                        <button class="btn btn-run" onclick="runCode(1)">⚡ Запустити</button>
-                        <button class="btn btn-check" onclick="checkCode(1)">✅ Перевірити</button>
-                    </div>
-                </div>
-                <div class="output-section">
-                    <div class="section-title">🖥️ Консоль виведення:</div>
-                    <div id="output-1" class="console-output"></div>
-                    <div id="badge-1" class="result-badge"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ЗАВДАННЯ 3: Цикли -->
-        <div id="task-2" class="task-panel">
-            <div class="task-description">
-                <h3>Завдання: Фітнес-трекер Крок за Кроком 📊</h3>
-                <p><b>Контекст:</b> Користувач задає ціль кроків на день. Кожен елемент введення — це кількість кроків за одну прогулянку. Введення завершується, коли користувач вводить 0 (сигнал зупинки).</p>
-                <p><b>Вимоги:</b> Програма спочатку зчитує ціль (наприклад, 10000). Потім у циклі зчитує числа, поки не зустріне 0. Порахуй суму всіх кроків. Якщо сума досягла або перевищила ціль, виведи <code>"Ціль досягнута"</code>, інакше виведи <code>"Треба ще пройтися"</code>.</p>
-            </div>
-            <div class="workspace">
-                <div class="editor-section">
-                    <div class="section-title">💻 Твій код на Python:</div>
-                    <div class="mock-input-zone">ℹ️ Вхідні тестові дані: Ціль=5000, кроки: 2000, 4000, 0</div>
-                    <textarea id="code-2" class="code-editor">target = int(input())
-total_steps = 0
-
-# Напиши цикл while, який зчитує кроки, поки не буде введено 0
-# Після циклу перевір умови і виведи правильний вердикт
-</textarea>
-                    <div class="controls">
-                        <button class="btn btn-run" onclick="runCode(2)">⚡ Запустити</button>
-                        <button class="btn btn-check" onclick="checkCode(2)">✅ Перевірити</button>
-                    </div>
-                </div>
-                <div class="output-section">
-                    <div class="section-title">🖥️ Консоль виведення:</div>
-                    <div id="output-2" class="console-output"></div>
-                    <div id="badge-2" class="result-badge"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ЗАВДАННЯ 4: Списки -->
-        <div id="task-3" class="task-panel">
-            <div class="task-description">
-                <h3>Завдання: Інвентар мандрівника 🎒</h3>
-                <p><b>Контекст:</b> У грі персонаж збирає предмети в рюкзак (список). Тобі потрібно відфільтрувати знайдені предмети і залишити тільки ті, що мають магічну силу (у назві яких є слово "Magic").</p>
-                <p><b>Вимоги:</b> Тобі дано початковий список <code>items</code>. Напиши код, який створює новий список тільки з магічними речами і виводить його за допомогою <code>print()</code>.</p>
-            </div>
-            <div class="workspace">
-                <div class="editor-section">
-                    <div class="section-title">💻 Твій код на Python:</div>
-                    <textarea id="code-3" class="code-editor">items = ["Magic Sword", "Healing Potion", "Magic Ring", "Shield", "Magic Cape"]
-magic_items = []
-
-# За допомогою циклу for перебери всі елементи списку items
-# Якщо слово "Magic" є в назві елемента, додай його в magic_items за допомогою .append()
-
-
-print(magic_items)
-</textarea>
-                    <div class="controls">
-                        <button class="btn btn-run" onclick="runCode(3)">⚡ Запустити</button>
-                        <button class="btn btn-check" onclick="checkCode(3)">✅ Перевірити</button>
-                    </div>
-                </div>
-                <div class="output-section">
-                    <div class="section-title">🖥️ Консоль виведення:</div>
-                    <div id="output-3" class="console-output"></div>
-                    <div id="badge-3" class="result-badge"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ЗАВДАННЯ 5: Функції -->
-        <div id="task-4" class="task-panel">
-            <div class="task-description">
-                <h3>Завдання: Конвеєр пакування 📦</h3>
-                <p><b>Контекст:</b> Космічна фабрика автоматизує пакування коробок. Потрібна функція, яка розраховує об'єм коробки за трьома параметрами: довжина, ширина і висота.</p>
-                <p><b>Вимоги:</b> Створи функція з назвою <code>calc_volume(a, b, c)</code>, яка ПОВЕРТАЄ (через <code>return</code>) значення їхнього добутку.</p>
-            </div>
-            <div class="workspace">
-                <div class="editor-section">
-                    <div class="section-title">💻 Твій код на Python:</div>
-                    <textarea id="code-4" class="code-editor"># Опиши функцію calc_volume(a, b, c) тут
-def calc_volume(a, b, c):
-    pass
-
-# Перевірка роботи функції (не видаляй рядки нижче)
-print(calc_volume(2, 3, 4))
-print(calc_volume(5, 5, 2))
-</textarea>
-                    <div class="controls">
-                        <button class="btn btn-run" onclick="runCode(4)">⚡ Запустити</button>
-                        <button class="btn btn-check" onclick="checkCode(4)">✅ Перевірити</button>
-                    </div>
-                </div>
-                <div class="output-section">
-                    <div class="section-title">🖥️ Консоль виведення:</div>
-                    <div id="output-4" class="console-output"></div>
-                    <div id="badge-4" class="result-badge"></div>
-                </div>
-            </div>
-        </div>
-
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Приховані елементи для імітації введення і збору виведення Brython -->
-    <script type="text/python">
-        from browser import window, document, sys
-        import io
+    <!-- Проблема -->
+    <div class="problem-statement" id="problemStatement">
+        <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
+        <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання теорії, яка стане зброєю у практичному симуляторі! Дійте! 🖥️</p>
+    </div>
 
-        def custom_run(task_id, mock_inputs=[]):
-            # Перенаправлення стандартного виведення
-            old_stdout = sys.stdout
-            sys.stdout = io.StringIO()
-            
-            # Імітація input() через генератор масиву тестових даних
-            input_cursor = 0
-            def mock_input(*args):
-                nonlocal input_cursor
-                if input_cursor < len(mock_inputs):
-                    val = str(mock_inputs[input_cursor])
-                    input_cursor += 1
-                    return val
-                return ""
-            
-            import builtins
-            original_input = builtins.input
-            builtins.input = mock_input
+    <!-- КАРТКИ ЕТАПІВ БУДУТЬ ГЕНЕРУВАТИСЯ С КРИПТОМ -->
+    <div id="questBox"></div>
 
-            # Отримання коду з textarea
-            code = document[f"code-{task_id}"].value
-            
-            try:
-                # Виконання коду учня
-                exec(code, {})
-                output = sys.stdout.getvalue()
-            except Exception as e:
-                output = f"Помилка виконання:
-{str(e)}"
-            
-            # Відновлення стандартних функцій
-            sys.stdout = old_stdout
-            builtins.input = original_input
-            
-            return output
+    <!-- Фініш -->
+    <div class="step-card" id="finish-card">
+        <h2 style="color: var(--accent-green)">🏆 МІСІЮ ВИКОНАНО!</h2>
+        <p style="font-size: 1.2rem;">Вітаємо, кібердетективе! Ви успішно пройшли всі 10 рівнів захисту, виявили спам та захистили шкільну інфраструктуру. 🛡️✨</p>
+        <p>Ваш результат: <strong id="scoreVal" style="color: var(--accent-purple); font-size: 1.5rem;">0</strong> / 10</p>
+        <button class="next-btn" style="display:inline-block; float:none;" onclick="location.reload()">Пройти знову 🔄</button>
+    </div>
+</div>
 
-        # Експорт функцій у JavaScript глобальну зону
-        window.run_python_task = custom_run
-    </script>
-
-    <script type="text/javascript">
-        // Масив тест-кейсів для автоматичної перевірки компетентностей
-        const testCases = [
-            { inputs: ["Яблуко", "30", "3"], expected: "Товар: Яблуко, Разом: 90.0 грн" },
-            { inputs: ["19", "AI2026"], expected: "Доступ дозволено" },
-            { inputs: ["5000", "2000", "4000", "0"], expected: "Ціль досягнута" },
-            { inputs: [], expected: "['Magic Sword', 'Magic Ring', 'Magic Cape']" },
-            { inputs: [], expected: "24
-50" }
-        ];
-
-        function switchTask(taskId) {
-            document.querySelectorAll('.task-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById(`task-${taskId}`).classList.add('active');
-            document.querySelectorAll('.tab-btn')[taskId].classList.add('active');
-        }
-
-        function runCode(taskId) {
-            const outDiv = document.getElementById(`output-${taskId}`);
-            outDiv.textContent = "Запуск коду...";
-            
-            setTimeout(() => {
-                try {
-                    let result = window.run_python_task(taskId, testCases[taskId].inputs);
-                    outDiv.textContent = result;
-                } catch(e) {
-                    outDiv.textContent = "Помилка середовища виконання Brython.";
-                }
-            }, 50);
-        }
-
-        function checkCode(taskId) {
-            const outDiv = document.getElementById(`output-${taskId}`);
-            const badge = document.getElementById(`badge-${taskId}`);
-            
-            try {
-                let result = window.run_python_task(taskId, testCases[taskId].inputs).trim();
-                outDiv.textContent = result;
-                
-                let expected = testCases[taskId].expected.trim();
-                
-                // Гнучка перевірка (приведення до одного регістру або робота з плаваючою крапкою для каси)
-                let isCorrect = false;
-                if (taskId === 0) {
-                    // для каси перевіряємо чи є правильні числа та слова
-                    isCorrect = result.includes("Яблуко") && (result.includes("90") || result.includes("90.0"));
-                } else {
-                    isCorrect = result.replace(/\s+/g, '') === expected.replace(/\s+/g, '');
-                }
-
-                if (isCorrect) {
-                    badge.className = "result-badge success";
-                    badge.innerHTML = "🎉 Чудово! Завдання виконано абсолютно правильно. Компетентність підтверджено!";
-                } else {
-                    badge.className = "result-badge error";
-                    badge.innerHTML = "❌ Ой, результат не збігається з очікуваним. Перевір умови завдання або регістр букв.";
-                }
-            } catch(e) {
-                badge.className = "result-badge error";
-                badge.innerHTML = "❌ Критична помилка під час перевірки програми.";
-            }
-        }
-    </script>
-</body>
-</html>
+<script>
+    // Масив з 10 питань квесту
+    const questData = [
+        {
+            type: "quiz",
+            title: "Етап 1: Перша лінія оборони 🔐",
+            theory: "📖 ТЕОРІЯ-КЛЮЧ: Двофакторна автентифікація (2FA) додає додатковий рівень захисту, вимагаючи не лише пароль, а й тимчасовий код підтвердження (SMS, додаток). Навіть якщо хакер знає пароль, без другого чинника він не увійде.",
+            question: "Хакер дізнався пароль від вашого Instagram. Який механізм безпеки найбільше завадить йому миттєво захопити акаунт?",
+            options: [
+                "Складне ім'я користувача (username)",
+                "Увімкнена двофакторна автентифікація (2FA)",
+                "Антивірус, встановлений на вашому смартфоні",
+                "Часте очищення кешу браузера"
+            ],
+            correct: 1,
+            explanation: "Правильно! 2FA вимагає другий секретний код (наприклад, з додатка Google Authenticator або SMS), який є тільки на вашому фізичному пристрої. Хакер застрягне на цьому етапі!"
+        },
+        {
+            type: "quiz",
+            title: "Етап 2: Анатомія шифрування 🧬",
+            theory: "📖 ТЕОРІЯ-КЛЮЧ: Протокол HTTPS (літера 'S' означає Secure) використовує SSL/TLS шифрування. Це гарантує, що дані між вашим браузером і сервером передаються у зашифрованому вигляді і не можуть бути перехоплені в публічному Wi-Fi.",
+            question: "Ви зайшли в кафе і підключилися до відкритого Wi-Fi. Який префікс у адресному рядку сайту гарантує, що ваші паролі не перехоплять прямо з повітря?",
+            options: [
+                "http://",
+                "ftp://",
+                "https://",
+                "www.site."
+            ],
+            correct: 2,
+            explanation: "Супер! Саме протокол HTTPS шифрує трафік. Якщо сайт працює на старій версії HTTP, зловмисник у тій же мережі Wi-Fi легко прочитає ваші дані як відкритий текст."
+        },
+        {
+            type: "simulation",
+            title: "Етап 3: Симулятор вхідної пошти 📨 [СПАМ-ФІЛЬТР]",
+            theory: "📖 ТЕОРІЯ-КЛЮЧ: Фішинг — це спроба виманити паролі чи гроші під виглядом офіційних брендів. Спам-розсилки часто тиснуть на емоції (паніка, виграш), містять підозрілі адреси відправників (наприклад, недійсні домени) та заклики негайно перейти за лінком.",
+            isSpam: true,
+            sender: "безпека-приват24 <security-update-alert@net-banking-verify-ua.com>",
+            subject: "⚠️ ТЕРМІНОВО: Ваш рахунок заблоковано!",
