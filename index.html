@@ -1,4 +1,3 @@
-html
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -49,8 +48,8 @@ html
         .problem-statement {
             background: #21262d;
             border-left: 4px solid var(--danger);
-            padding: 15px;
-            border-radius: 4px;
+            padding: 25px;
+            border-radius: 8px;
             margin-bottom: 30px;
         }
 
@@ -144,7 +143,7 @@ html
             border-radius: 6px;
             cursor: pointer;
             display: block;
-            margin: 30px auto;
+            margin: 20px auto 0 auto;
             box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
             transition: transform 0.2s ease;
         }
@@ -235,6 +234,7 @@ html
             background: #21262d;
             border-radius: 3px;
             margin-bottom: 30px;
+            width: 100%;
             overflow: hidden;
         }
 
@@ -269,24 +269,22 @@ html
         <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- Проблема та старт -->
-    <div id="startScreen">
-        <div class="problem-statement" id="problemStatement">
-            <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
-            <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання теорії, яка стане зброєю у практичному симуляторі! Дійте! 🖥️</p>
-        </div>
-        <button class="start-btn" onclick="startQuest()">Розпочати квест 🚀</button>
+    <!-- Проблема, що відображається на початку -->
+    <div class="problem-statement" id="problemBox">
+        <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
+        <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання теорії, яка стане зброєю у практичному симуляторі! Дійте! 🖥️</p>
+        <button class="start-btn" id="startBtn" onclick="startQuest()">Розпочати квест 🚀</button>
     </div>
 
-    <!-- КАРТКИ ЕТАПІВ БУДУТЬ ГЕНЕРУВАТИСЯ С КРИПТОМ -->
-    <div id="questBox" style="display: none;"></div>
+    <!-- Контейнер для етапів квесту -->
+    <div id="questBox"></div>
 
-    <!-- Фініш -->
+    <!-- Фінішна картка результатів -->
     <div class="step-card" id="finish-card">
         <h2 style="color: var(--accent-green)">🏆 МІСІЮ ВИКОНАНО!</h2>
         <p style="font-size: 1.2rem;">Вітаємо, кібердетективе! Ви успішно пройшли всі 10 рівнів захисту, виявили спам та захистили шкільну інфраструктуру. 🛡️✨</p>
         <p>Ваш результат: <strong id="scoreVal" style="color: var(--accent-purple); font-size: 1.5rem;">0</strong> / 10</p>
-        <button class="next-btn" style="display:inline-block; float:none;" onclick="location.reload()">Пройти знову 🔄</button>
+        <button class="option-btn" style="text-align:center; margin: 20px auto 0 auto; display:block; width:200px;" onclick="location.reload()">Пройти знову 🔄</button>
     </div>
 </div>
 
@@ -295,7 +293,7 @@ html
         {
             type: "quiz",
             title: "Етап 1: Перша лінія оборони 🔐",
-            theory: "📖 ТЕОРІЯ-КЛЮЧ: Двофакторна автентифікація (2FA) додає додатковий уровень захисту, вимагаючи не лише пароль, а й тимчасовий код підтвердження (SMS, додаток). Навіть якщо хакер знає пароль, без другого чинника він не увійде.",
+            theory: "📖 ТЕОРІЯ-КЛЮЧ: Двофакторна автентифікація (2FA) додає додатковий рівень захисту, вимагаючи не лише пароль, а й тимчасовий код підтвердження (SMS, додаток). Навіть якщо хакер знає пароль, без другого чинника він не увійде.",
             question: "Хакер дізнався пароль від вашого Instagram. Який механізм безпеки найбільше завадить йому миттєво захопити акаунт?",
             options: [
                 "Складне ім'я користувача (username)",
