@@ -303,3 +303,128 @@
             text: "Персональні комп'ютери за основним призначенням поділяються на різні категорії. Для яких завдання ми розробляємо поточну збірку?",
             progress: "20%",
             options: [
+                { text: "Потужний ігровий комп'ютер (високі вимоги до графіки)", score: "game" },
+{ text: "Офісний / Домашній ПК для навчання та фінансів", score: "office" },
+{ text: "Виділений сервер для збереження баз даних та мереж", score: "server" }
+]
+},
+2: {
+title: "Крок 2: Вибір архітектури процесора",
+graphic: "🧠",
+text: "Процесор — це серце системи. Яку модель або структуру ми встановимо в наш комп'ютер?",
+progress: "40%",
+options: [
+{ text: "Сучасний багатоядерний AMD Ryzen / Intel Core", score: "standard" },
+{ text: "Apple A18 Pro / Енергоефективний мобільний чіп", score: "mobile" },
+{ text: "Масив комбінованих ядер (архітектура суперкомп'ютера Frontier)", score: "super" }
+]
+},
+3: {
+title: "Крок 3: Конфігурація оперативної пам'яті (RAM)",
+graphic: "💾",
+text: "Для швидкої обробки даних у 2025-2026 роках потрібен відповідний обсяг RAM. Скільки пам'яті закладемо в проєкт?",
+progress: "60%",
+options: [
+{ text: "8 ГБ – 16 ГБ (Достатньо для базових офісних завдань)", score: "light" },
+{ text: "24 ГБ – 64 ГБ (Ідеально для геймінгу та локального ШІ)", score: "heavy" },
+{ text: "Обсяги ексафлопсного рівня (Для обчислень прогнозів погоди та біомаси)", score: "mega" }
+]
+},
+4: {
+title: "Крок 4: Вибір операційної системи",
+graphic: "💿",
+text: "Оберіть платформу, яка керуватиме апаратними ресурсами вашого пристрою.",
+progress: "80%",
+options: [
+{ text: "Windows 11 / Linux (Стандарт для стаціонарних ПК)", score: "pc-os" },
+{ text: "Android 15 / iOS 18 (Спеціалізовані мобільні ОС)", score: "mob-os" }
+]
+},
+5: {
+title: "Крок 5: Цифрова безпека та екосистема",
+graphic: "📱",
+text: "В Україні активно працює програма 'Держава у смартфоні' (застосунок Дія). Чи інтегруємо ми модуль апаратного захисту для роботи з ЕЦП та реєстрами?",
+progress: "100%",
+options: [
+{ text: "Так, встановлюємо криптографічний модуль захисту", score: "secure" },
+{ text: "Ні, залишаємо базовий рівень захисту без авторизації в реєстрах", score: "basic" }
+]
+}
+};
+let currentStep = 1;
+let mainBranch = "";
+let selectedOption = null;
+function triggerTextReset() {
+const textEl = document.getElementById("quest-text");
+textEl.style.animation = 'none';
+textEl.offsetHeight; /* тригер перевідмальовування браузером */
+textEl.style.animation = null;
+}
+function changeScreen(screenId) {
+document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+document.getElementById(screenId).classList.add('active');
+}
+function startQuest() {
+if (audioCtx.state === 'suspended') audioCtx.resume();
+playSound('click');
+currentStep = 1;
+mainBranch = "";
+selectedOption = null;
+changeScreen('quest-screen');
+renderStep(currentStep);
+}
+function renderStep(step) {
+const data = questData[step];
+selectedOption = null;
+document.getElementById("next-btn").disabled = true;
+document.getElementById("step-title").innerText = data.title;
+document.getElementById("step-counter").innerText = Крок ${step} з 5;
+document.getElementById("progress").style.width = data.progress;
+document.getElementById("graphic").innerText = data.graphic;
+document.getElementById("quest-text").innerText = data.text;
+triggerTextReset();
+const optionsContainer = document.getElementById("options");
+optionsContainer.innerHTML = "";
+data.options.forEach((opt) => {
+const button = document.createElement("button");
+button.className = "btn-github";
+button.innerHTML = <span>${opt.text}</span> <span class="badge">⚙️</span>;
+button.onclick = () => {
+playSound('select');
+document.querySelectorAll('.btn-github').forEach(b => b.classList.remove('selected'));
+button.classList.add('selected');
+selectedOption = opt;
+document.getElementById("next-btn").disabled = false;
+};
+optionsContainer.appendChild(button);
+});
+}
+function goToNextStep() {
+if (!selectedOption) return;
+playSound('click');
+if (currentStep === 1) {
+mainBranch = selectedOption.score;
+}
+if (currentStep < 5) {
+currentStep++;
+renderStep(currentStep);
+} else {
+showResults();
+}
+}
+function showResults() {
+playSound('success');
+changeScreen('result-screen');
+const resultText = document.getElementById("result-text");
+if (mainBranch === "game") {
+resultText.innerHTML = "Ви успішно зібрали Супер-ігровий комп'ютер! Завдяки обраним параметрам він легко впорається з сучасними іграми, стрімінгом на Twitch та обробкою штучного інтелекту. Геймінг на максимум! 🎮";
+} else if (mainBranch === "server") {
+resultText.innerHTML = "Ваш Високопродуктивний Сервер готовий! Він ідеально підходить для організації роботи комп'ютерних мереж, надійного захисту корпоративних даних та обробки великих баз реєстрів. Справжній фундамент ІТ-інфраструктури! 🌐";
+} else {
+resultText.innerHTML = "Збірка Домашнього / Офісного ПК завершена! Комп'ютер вийшов дуже енергоефективним та швидким. Він ідеально підійде для виконання шкільних завдань, ведення бухгалтерії, фінансів та комфортного навчання. Практичний вибір! 💼";
+}
+}
+function restartQuest() {
+playSound('click');
+changeScreen('start-screen');
+}
