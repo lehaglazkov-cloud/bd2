@@ -3,310 +3,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberShield: Кібер-Квест 11 Клас</title>
+    <title>IT-Квест: Збери свій Супер-ПК 2026</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --card-bg: #161b22;
-            --accent-green: #00ff66;
-            --accent-purple: #8a2be2;
-            --text-color: #c9d1d9;
-            --text-muted: #8b949e;
-            --danger: #ff4757;
+            --panel-bg: #161b22;
+            --accent-blue: #58a6ff;
+            --success-green: #2ea44f;
+            --text-main: #c9d1d9;
+            --border-color: #30363d;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--text-main);
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 800px;
+        .quest-container {
+            background-color: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            max-width: 700px;
             width: 100%;
+            padding: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
         }
 
-        header {
+        .header {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 24px;
             text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 2px dashed var(--accent-purple);
-            padding-bottom: 20px;
         }
 
-        h1 {
-            color: var(--accent-green);
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .header h1 {
+            color: var(--accent-blue);
+            font-size: 24px;
+            margin: 0 0 8px 0;
         }
 
-        .problem-statement {
-            background: #21262d;
-            border-left: 4px solid var(--danger);
-            padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-
-        .step-card {
-            background-color: var(--card-bg);
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-
-        .step-title {
-            color: var(--accent-purple);
-            font-size: 1.4rem;
-            margin-top: 0;
+        .graphic-container {
+            background: linear-gradient(135deg, #1f242c 0%, #0d1117 100%);
+            border: 2px dashed var(--border-color);
+            border-radius: 6px;
+            height: 180px;
             display: flex;
+            justify-content: center;
             align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid #30363d;
-            padding-bottom: 10px;
-        }
-
-        .theory-box {
-            background: #0d1117;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 3px solid var(--accent-green);
-            margin-bottom: 20px;
-            font-style: italic;
-        }
-
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .option-btn {
-            background: #21262d;
-            border: 1px solid #30363d;
-            color: var(--text-color);
-            padding: 12px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            text-align: left;
-            font-size: 1rem;
-            transition: all 0.2s ease;
-        }
-
-        .option-btn:hover:not(:disabled) {
-            background: #30363d;
-            border-color: var(--accent-purple);
-        }
-
-        .option-btn:disabled {
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        .feedback {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 6px;
-            display: none;
-            line-height: 1.5;
-        }
-
-        .feedback.correct {
-            background: rgba(0, 255, 102, 0.1);
-            border: 1px solid var(--accent-green);
-            color: #00ff66;
-            display: block;
-        }
-
-        .feedback.wrong {
-            background: rgba(255, 71, 87, 0.1);
-            border: 1px solid var(--danger);
-            color: var(--danger);
-            display: block;
-        }
-
-        .start-btn {
-            background: linear-gradient(45deg, var(--accent-green), #00b344);
-            color: #0d1117;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: block;
-            margin: 20px auto 0 auto;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.4);
-            transition: transform 0.2s ease;
-        }
-
-        .start-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .next-btn {
-            background: linear-gradient(45deg, var(--accent-purple), #6a0dad);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: none;
-            float: right;
-            box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
-        }
-
-        .next-btn:hover {
-            opacity: 0.9;
-        }
-
-        /* Симулятор пошти */
-        .email-simulator {
-            background: #1f242c;
-            border: 1px solid #3f4754;
-            border-radius: 8px;
+            margin-bottom: 24px;
+            position: relative;
             overflow: hidden;
-            margin-top: 15px;
         }
 
-        .email-header {
-            background: #2d333b;
-            padding: 12px;
-            border-bottom: 1px solid #3f4754;
-            font-size: 0.9rem;
+        .vector-art {
+            font-size: 70px;
+            animation: float 3s ease-in-out infinite;
         }
 
-        .email-body {
-            padding: 20px;
-            background: #181c22;
-            min-height: 120px;
-            line-height: 1.6;
-        }
-
-        .email-meta {
-            margin-bottom: 5px;
-        }
-
-        .email-meta span {
-            color: var(--text-muted);
-        }
-
-        .sim-actions {
-            display: flex;
-            gap: 15px;
-            padding: 15px;
-            background: #1f242c;
-            border-top: 1px solid #3f4754;
-        }
-
-        .action-btn-good {
-            background: #238636;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .action-btn-spam {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         .progress-bar {
-            height: 6px;
-            background: #21262d;
-            border-radius: 3px;
-            margin-bottom: 30px;
-            width: 100%;
+            background-color: #21262d;
+            height: 8px;
+            border-radius: 4px;
+            margin-bottom: 24px;
             overflow: hidden;
         }
 
         .progress-fill {
+            background-color: var(--accent-blue);
             height: 100%;
-            background: var(--accent-green);
-            width: 0%;
-            transition: width 0.3s ease;
+            width: 20%;
+            transition: width 0.4s ease;
         }
 
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
+        .story-text {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
         }
 
-        #finish-card {
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .btn-github {
+            background-color: #21262d;
+            color: var(--accent-blue);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-github:hover {
+            background-color: #30363d;
+            border-color: #8b949e;
+            color: #ffffff;
+        }
+
+        .btn-github:active {
+            background-color: #282e36;
+        }
+
+        .badge {
+            background-color: var(--border-color);
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .result-screen {
             text-align: center;
             display: none;
+        }
+
+        .btn-restart {
+            background-color: var(--success-green);
+            color: #ffffff;
+            border: 1px solid rgba(240,246,252,0.1);
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-restart:hover {
+            background-color: #2c974b;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>⚡ CyberShield v3.0 ⚡</h1>
-        <p>Інтерактивний кібер-квест з інформаційної безпеки для 11-х класів</p>
-    </header>
+<div class="quest-container">
+    <!-- Квестова частина -->
+    <div id="quest-card">
+        <div class="header">
+            <h1 id="step-title">Крок 1: Вибір призначення ПК</h1>
+            <span class="badge" id="step-counter">Крок 1 з 5</span>
+        </div>
 
-    <div class="progress-bar">
-        <div class="progress-fill" id="progressFill"></div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <div class="graphic-container">
+            <div class="vector-art" id="graphic">🖥️</div>
+        </div>
+
+        <div class="story-text" id="quest-text">
+            Вітаємо в симуляторі! Згідно з вашим уроком інформатики, комп'ютери мають різні класи та архітектуру. Для якої мети ми збираємо систему? Від цього залежить тип процесора та обсяг пам'яті!
+        </div>
+
+        <div class="options-grid" id="options">
+            <!-- Кнопки генеруються скриптом -->
+        </div>
     </div>
-
-    <!-- Початковий екран проблеми із робочою кнопкою старту -->
-    <div class="problem-statement" id="problemBox">
-        <h3>🚨 КРИТИЧНА СИТУАЦІЯ:</h3>
-        <p>Сервери вашої школи зазнали скоординованої хакерської атаки. Частина даних зашифрована, а на пошту адміністрації та учнів хлинула хвиля невідомих запитів. Тільки ваша команда інформаційних аналітиків з 11-А може знайти витік, розгадати ключі безпеки та відбити атаку. Кожен етап вимагає знання важливої теорії, яка стане ключем та зброєю у практичному симуляторі! Дійте! 🖥️</p>
-        <button class="start-btn" id="startBtn" onclick="startQuest()">Розпочати квест 🚀</button>
-    </div>
-
-    <!-- Контейнер куди будуть рендеритися завдання -->
-    <div id="questBox"></div>
 
     <!-- Екран фінішу -->
-    <div class="step-card" id="finish-card">
-        <h2 style="color: var(--accent-green)">🏆 МІСІЮ ВИКОНАНО!</h2>
-        <p style="font-size: 1.2rem;">Вітаємо, кібердетективе! Ви успішно пройшли всі 10 рівнів захисту, розпізнали спам та захистили критичну шкільну інфраструктуру. 🛡️✨</p>
-        <p>Ваш підсумковий результат: <strong id="scoreVal" style="color: var(--accent-purple); font-size: 1.5rem;">0</strong> / 10</p>
-        <button class="option-btn" style="text-align:center; margin: 20px auto 0 auto; display:block; width:200px;" onclick="location.reload()">Пройти знову 🔄</button>
+    <div id="result-card" class="result-screen">
+        <div class="header">
+            <h1 style="color: var(--success-green)">Збірку успішно завершено! 🚀</h1>
+        </div>
+        <div class="vector-art" style="font-size: 90px; margin: 20px 0;">⚡🖥️⚡</div>
+        <div class="story-text" id="result-text">
+            Ви побудували збалансовану та потужну систему! Ваші знання сучасної комп'ютерної техніки на висоті.
+        </div>
+        <button class="btn-restart" onclick="restartQuest()">Зібрати інший ПК</button>
     </div>
 </div>
 
 <script>
-    // База даних етапів квесту
-    const questData = [
-        {
-            type: "quiz",
-            title: "Етап 1: Перша лінія оборони 🔐",
-            theory: "📖 ТЕОРІЯ-КЛЮЧ: Двофакторна автентифікація (2FA) додає додатковий рівень захисту, вимагаючи не лише пароль, а й тимчасовий код підтвердження (SMS, додаток або токен). Навіть якщо зловмисник знає пароль, без другого чинника він не зможе увійти в систему.",
-            question: "Хакер дізнався пароль від вашого особистого облікового запису Instagram. Який механізм безпеки найбільше завадить йому миттєво захопити акаунт?",
+    // База даних квесту на основі презентації
+    const questData = {
+        1: {
+            title: "Крок 1: Призначення комп'ютера",
+            graphic: "🖥️",
+            text: "Згідно з класифікацією за призначенням, персональні комп'ютери діляться на кілька типів. Яку конфігурацію ви обираєте для старту?",
+            progress: "20%",
             options: [
-                "Складне та довге ім'я користувача (username)",
-                "Заздалегідь увімкнена двофакторна автентифікація (2FA)",
-                "Антивірус, встановлений на вашому смартфоні",
-                "Часте очищення історії та кешу браузера"
-            ],
-            correct: 1,
-            explanation: "Правильно! Двофакторна автентифікація вимагає введення тимчасового коду, який надходить лише на ваш фізичний пристрій. Хакер просто застрягне на екрані підтвердження!"
+                { text: "Потужний ігровий ПК (високі вимоги)", next: 2, score: "game" },
+                { text: "Офісний / Домашній робочий ПК", next: 2, score: "office" },
+                { text: "Сервер для збереження даних та мереж", next: 2, score: "server" }
+            ]
         },
-        {
-            type: "quiz",
-            title: "Етап 2: Анатомія безпечного з'єднання 🧬",
-            theory: "📖 ТЕОРІЯ-КЛЮЧ: Протокол HTTPS (де літера 'S' означає Secure) використовує криптографічне шифрування даних. Це гарантує, що вся інформація між вашим пристроєм та сервером передається у зашифрованому вигляді і не може бути перехоплена зловмисниками у відкритих мережах.",
+        2: {
+            title: "Крок 2: Серце системи (Процесор)",
+            graphic: "🧠",
+            text: "Яку модель процесора встановимо? Зверніть увагу на характеристики з вашого підручника 2025/2026 років!",
+            progress: "40%",
+            options: [
+                { text: "Qualcomm Snapdragon 8 / AMD Ryzen (Сучасний енергоефективний)", next: 3 },
+                { text: "Apple A18 Pro / Надважкий флагман", next: 3 },
+                { text: "Мільйони ядер AMD (Конфігурація суперкомп'ютера Frontier)", next: 3 }
+            ]
+        },
+        3: {
+            title: "Крок 3: Оперативна пам'ять (RAM)",
+            graphic: "💾",
+            text: "Для стабільної роботи операційної системи та програм потрібен правильний обсяг RAM. Скільки гігабайт оберете?",
+            progress: "60%",
+            options: [
+                { text: "8 ГБ – 16 ГБ (Базовий стандарт для офісу)", next: 4 },
+                { text: "24 ГБ – 64 ГБ (Просунутий рівень для ігор та штучного інтелекту)", next: 4 },
+                { text: "Понад 128 ГБ / Ексафлопсний масив (Для серверних обчислень)", next: 4 }
+            ]
+        },
+        4: {
+            title: "Крок 4: Операційна система",
+            graphic: "💿",
+            text: "Що керуватиме нашим залізом? Оберіть ОС, яка актуальна в сучасній екосистемі.",
+            progress: "80%",
+            options: [
+                { text: "Windows 11 / 12 (Універсальна для дому та бізнесу)", next: 5 },
+                { text: "Android 15 / iOS 18 (Для ультрапортативних мобільних ПК)", next: 5 },
+                { text: "Linux Server OS (Для максимальної відмовостійкості)", next: 5 }
+            ]
+        },
+        5: {
+            title: "Крок 5: Інтеграція з екосистемою",
+            graphic: "📱",
+            text: "Останній штрих: сучасний ПК має підтримувати державні цифрові послуги (програма 'Держава у смартфоні' / застосунок Дія). Додаємо модуль безпеки?",
+            progress: "100%",
+            options: [
+                { text: "Так, встановити модуль шифрування для ЕЦП та Дії", next: 'finish' },
+                { text: "Ні, використовувати тільки для автономних ігор", next: 'finish' }
+            ]
+        }
+    };
+
+    let currentStep = 1;
+    let userChoice = "";
+
+    function renderStep(step) {
+        if (step === 'finish') {
+            showResults();
+            return;
+        }
+
+        const data = questData[step];
+        
+        document.getElementById("step-title").innerText = data.title;
+        document.getElementById("step-counter").innerText = `Крок ${step} з 5`;
+        document.getElementById("progress").style.width = data.progress;
+        document.getElementById("graphic").innerText = data.graphic;
+        document.getElementById("quest-text").innerText = data.text;
+
+        const optionsContainer = document.getElementById("options");
+        optionsContainer.innerHTML = "";
+
+        data.options.forEach((opt, index) => {
+            const button = document.createElement("button");
+            button.className = "btn-github";
+            button.innerHTML = `<span>${opt.text}</span> <span class="badge">select</span>`;
+            
+            button.onclick = () => {
+                if (opt.score) userChoice = opt.score;
+                renderStep(opt.next);
+            };
+            
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function showResults() {
+        document.getElementById("quest-card").style.display = "none";
+        const resultCard = document.getElementById("result-card");
