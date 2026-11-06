@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-Квест: Збери свій Супер-ПК 2026</title>
+    <title>IT-Квест: Види сучасних комп’ютерів</title>
     <style>
         :root {
             --bg-color: #0d1117;
@@ -12,6 +12,7 @@
             --success-green: #2ea44f;
             --text-main: #c9d1d9;
             --border-color: #30363d;
+            --selected-bg: #1f242c;
         }
 
         body {
@@ -84,28 +85,37 @@
         .progress-fill {
             background-color: var(--accent-blue);
             height: 100%;
-            width: 20%;
+            width: 0%;
             transition: width 0.4s ease;
         }
 
+        /* Анімація появи тексту */
         .story-text {
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 24px;
+            animation: fadeInText 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .options-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 12px;
+            margin-bottom: 24px;
         }
 
         .btn-github {
             background-color: #21262d;
-            color: var(--accent-blue);
+            color: var(--text-main);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 12px 16px;
+            padding: 14px 16px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -122,8 +132,11 @@
             color: #ffffff;
         }
 
-        .btn-github:active {
-            background-color: #282e36;
+        .btn-github.selected {
+            background-color: var(--selected-bg);
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
         }
 
         .badge {
@@ -134,35 +147,76 @@
             font-size: 11px;
         }
 
-        .result-screen {
-            text-align: center;
-            display: none;
+        .action-container {
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
         }
 
-        .btn-restart {
+        .btn-action {
             background-color: var(--success-green);
             color: #ffffff;
             border: 1px solid rgba(240,246,252,0.1);
-            padding: 12px 24px;
-            font-size: 16px;
+            padding: 12px 28px;
+            font-size: 15px;
             font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
+            transition: background-color 0.2s, transform 0.1s;
         }
 
-        .btn-restart:hover {
+        .btn-action:hover {
             background-color: #2c974b;
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        .btn-action:disabled {
+            background-color: #21262d;
+            color: #8b949e;
+            cursor: not-allowed;
+            border-color: var(--border-color);
+        }
+
+        /* Екрани */
+        .screen {
+            display: none;
+        }
+        .screen.active {
+            display: block;
+        }
+        .center-screen {
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
 <div class="quest-container">
-    <!-- Квестова частина -->
-    <div id="quest-card">
+
+    <!-- 1. ЕКРАН СТАРТУ -->
+    <div id="start-screen" class="screen active center-screen">
         <div class="header">
-            <h1 id="step-title">Крок 1: Вибір призначення ПК</h1>
+            <h1>IT-Квест: Види сучасних комп’ютерів</h1>
+            <span class="badge">Урок 16</span>
+        </div>
+        <div class="graphic-container">
+            <div class="vector-art">⚡🚀🖥️</div>
+        </div>
+        <div class="story-text" style="opacity: 1;">
+            Привіт, майбутній інженере! Проаналізувавши презентацію «Нової української школи», ми дізналися, як стрімко розвиваються технології — від смартфонів у кишені до ексафлопсних суперкомп'ютерів як Frontier. <br><br>
+            Готовий пройти випробування, перевірити знання та зібрати свій перший збалансований ПК? 
+        </div>
+        <button class="btn-action" style="font-size: 18px; width: 100%; padding: 16px;" onclick="startQuest()">Розпочати квест ➔</button>
+    </div>
+
+    <!-- 2. ІГРОВИЙ ЕКРАН КРОКІВ -->
+    <div id="quest-screen" class="screen">
+        <div class="header">
+            <h1 id="step-title">Назва кроку</h1>
             <span class="badge" id="step-counter">Крок 1 з 5</span>
         </div>
 
@@ -175,120 +229,77 @@
         </div>
 
         <div class="story-text" id="quest-text">
-            Вітаємо в симуляторі! Згідно з вашим уроком інформатики, комп'ютери мають різні класи та архітектуру. Для якої мети ми збираємо систему? Від цього залежить тип процесора та обсяг пам'яті!
+            Текст запитання...
         </div>
 
         <div class="options-grid" id="options">
-            <!-- Кнопки генеруються скриптом -->
+            <!-- Кнопки варіантів генеруються динамічно -->
+        </div>
+
+        <div class="action-container">
+            <button class="btn-action" id="next-btn" onclick="goToNextStep()" disabled>Далі ➔</button>
         </div>
     </div>
 
-    <!-- Екран фінішу -->
-    <div id="result-card" class="result-screen">
+    <!-- 3. ЕКРАН ФІНІШУ -->
+    <div id="result-screen" class="screen center-screen">
         <div class="header">
-            <h1 style="color: var(--success-green)">Збірку успішно завершено! 🚀</h1>
+            <h1 style="color: var(--success-green)">Збірку успішно завершено! 🎉</h1>
         </div>
-        <div class="vector-art" style="font-size: 90px; margin: 20px 0;">⚡🖥️⚡</div>
-        <div class="story-text" id="result-text">
-            Ви побудували збалансовану та потужну систему! Ваші знання сучасної комп'ютерної техніки на висоті.
+        <div class="vector-art" style="font-size: 90px; margin: 20px 0;">🥇⚡💻</div>
+        <div class="story-text" id="result-text" style="opacity: 1;">
+            Фінальний результат...
         </div>
-        <button class="btn-restart" onclick="restartQuest()">Зібрати інший ПК</button>
+        <button class="btn-action" style="background-color: var(--accent-blue);" onclick="restartQuest()">Спробувати знову ↻</button>
     </div>
+
 </div>
 
 <script>
-    // База даних квесту на основі презентації
-    const questData = {
-        1: {
-            title: "Крок 1: Призначення комп'ютера",
-            graphic: "🖥️",
-            text: "Згідно з класифікацією за призначенням, персональні комп'ютери діляться на кілька типів. Яку конфігурацію ви обираєте для старту?",
-            progress: "20%",
-            options: [
-                { text: "Потужний ігровий ПК (високі вимоги)", next: 2, score: "game" },
-                { text: "Офісний / Домашній робочий ПК", next: 2, score: "office" },
-                { text: "Сервер для збереження даних та мереж", next: 2, score: "server" }
-            ]
-        },
-        2: {
-            title: "Крок 2: Серце системи (Процесор)",
-            graphic: "🧠",
-            text: "Яку модель процесора встановимо? Зверніть увагу на характеристики з вашого підручника 2025/2026 років!",
-            progress: "40%",
-            options: [
-                { text: "Qualcomm Snapdragon 8 / AMD Ryzen (Сучасний енергоефективний)", next: 3 },
-                { text: "Apple A18 Pro / Надважкий флагман", next: 3 },
-                { text: "Мільйони ядер AMD (Конфігурація суперкомп'ютера Frontier)", next: 3 }
-            ]
-        },
-        3: {
-            title: "Крок 3: Оперативна пам'ять (RAM)",
-            graphic: "💾",
-            text: "Для стабільної роботи операційної системи та програм потрібен правильний обсяг RAM. Скільки гігабайт оберете?",
-            progress: "60%",
-            options: [
-                { text: "8 ГБ – 16 ГБ (Базовий стандарт для офісу)", next: 4 },
-                { text: "24 ГБ – 64 ГБ (Просунутий рівень для ігор та штучного інтелекту)", next: 4 },
-                { text: "Понад 128 ГБ / Ексафлопсний масив (Для серверних обчислень)", next: 4 }
-            ]
-        },
-        4: {
-            title: "Крок 4: Операційна система",
-            graphic: "💿",
-            text: "Що керуватиме нашим залізом? Оберіть ОС, яка актуальна в сучасній екосистемі.",
-            progress: "80%",
-            options: [
-                { text: "Windows 11 / 12 (Універсальна для дому та бізнесу)", next: 5 },
-                { text: "Android 15 / iOS 18 (Для ультрапортативних мобільних ПК)", next: 5 },
-                { text: "Linux Server OS (Для максимальної відмовостійкості)", next: 5 }
-            ]
-        },
-        5: {
-            title: "Крок 5: Інтеграція з екосистемою",
-            graphic: "📱",
-            text: "Останній штрих: сучасний ПК має підтримувати державні цифрові послуги (програма 'Держава у смартфоні' / застосунок Дія). Додаємо модуль безпеки?",
-            progress: "100%",
-            options: [
-                { text: "Так, встановити модуль шифрування для ЕЦП та Дії", next: 'finish' },
-                { text: "Ні, використовувати тільки для автономних ігор", next: 'finish' }
-            ]
+    // Генератор звукових ефектів за допомогою Web Audio API (без файлів)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'click') {
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        } else if (type === 'select') {
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.08);
+        } else if (type === 'success') {
+            // Мажорний акорд для фінішу
+            const now = audioCtx.currentTime;
+            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+                const o = audioCtx.createOscillator();
+                const g = audioCtx.createGain();
+                o.connect(g); g.connect(audioCtx.destination);
+                o.frequency.setValueAtTime(freq, now + i*0.08);
+                g.gain.setValueAtTime(0.05, now + i*0.08);
+                g.gain.exponentialRampToValueAtTime(0.001, now + i*0.08 + 0.4);
+                o.start(now + i*0.08);
+                o.stop(now + i*0.08 + 0.4);
+            });
         }
-    };
-
-    let currentStep = 1;
-    let userChoice = "";
-
-    function renderStep(step) {
-        if (step === 'finish') {
-            showResults();
-            return;
-        }
-
-        const data = questData[step];
-        
-        document.getElementById("step-title").innerText = data.title;
-        document.getElementById("step-counter").innerText = `Крок ${step} з 5`;
-        document.getElementById("progress").style.width = data.progress;
-        document.getElementById("graphic").innerText = data.graphic;
-        document.getElementById("quest-text").innerText = data.text;
-
-        const optionsContainer = document.getElementById("options");
-        optionsContainer.innerHTML = "";
-
-        data.options.forEach((opt, index) => {
-            const button = document.createElement("button");
-            button.className = "btn-github";
-            button.innerHTML = `<span>${opt.text}</span> <span class="badge">select</span>`;
-            
-            button.onclick = () => {
-                if (opt.score) userChoice = opt.score;
-                renderStep(opt.next);
-            };
-            
-            optionsContainer.appendChild(button);
-        });
     }
 
-    function showResults() {
-        document.getElementById("quest-card").style.display = "none";
-        const resultCard = document.getElementById("result-card");
+    // Інформаційна база квесту на основі презентації
+    const questData = {
+        1: {
+            title: "Крок 1: Визначення призначення комп'ютера",
+            graphic: "🏗️",
+            text: "Персональні комп'ютери за основним призначенням поділяються на різні категорії. Для яких завдання ми розробляємо поточну збірку?",
+            progress: "20%",
+            options: [
