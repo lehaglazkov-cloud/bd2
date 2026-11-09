@@ -3,305 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>КіберВарта 11-А: Симулятор Інформаційної Безпеки</title>
+    <title>КіберКвест: Основи інформаційної безпеки (11 клас) 🚀</title>
     <style>
         :root {
-            --bg-dark: #090d16;
-            --panel-bg: #111827;
-            --terminal-bg: #030712;
-            --neon-cyan: #06b6d4;
-            --neon-green: #10b981;
-            --neon-red: #ef4444;
-            --neon-yellow: #f59e0b;
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --accent-yellow: #f59e0b;
             --text-main: #f3f4f6;
             --text-muted: #9ca3af;
-            --border-glow: #1f2937;
+            --border-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            font-family: 'Courier New', Courier, monospace;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-color);
             color: var(--text-main);
-            margin: 0;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
         }
 
         .container {
-            max-width: 850px;
             width: 100%;
-            background-color: var(--panel-bg);
-            border: 2px solid var(--neon-cyan);
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25);
-            box-sizing: border-box;
+            max-width: 900px;
         }
 
-        h1 {
-            color: var(--neon-cyan);
+        header {
             text-align: center;
-            font-size: 26px;
-            margin-top: 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 2px dashed var(--neon-cyan);
-            padding-bottom: 15px;
-            text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
         }
 
+        header h1 {
+            font-size: 2.2rem;
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Прогрес-бар */
         .progress-container {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 25px;
-            background: #030712;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #1f2937;
-        }
-
-        .prog-step {
-            color: var(--text-muted);
-            font-weight: bold;
-            font-size: 14px;
-            padding: 5px 10px;
-            border-radius: 4px;
-        }
-
-        .prog-step.active {
-            color: var(--neon-cyan);
-            background: rgba(6, 182, 212, 0.15);
-            text-shadow: 0 0 5px rgba(6, 182, 212, 0.5);
-        }
-
-        .prog-step.completed {
-            color: var(--neon-green);
-        }
-
-        .quest-step {
-            display: none;
-        }
-
-        .quest-step.active {
-            display: block;
-        }
-
-        /* Блок теорії */
-        .theory-section {
-            background-color: #1f2937;
-            border-left: 5px solid var(--neon-yellow);
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .theory-section h3 {
-            margin-top: 0;
-            color: var(--neon-yellow);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Екран симулятора */
-        .simulation-space {
-            background-color: var(--terminal-bg);
-            border: 1px solid #374151;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             position: relative;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
 
-        .sim-header {
-            display: flex;
-            justify-content: space-between;
-            color: #4b5563;
-            font-size: 12px;
-            border-bottom: 1px solid #1f2937;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-        }
-
-        .bug-alert {
-            color: var(--neon-red);
-            font-weight: bold;
-            animation: blink 1.5s infinite;
-            background: rgba(239, 68, 68, 0.1);
+        .step-indicator {
+            flex: 1;
+            text-align: center;
             padding: 10px;
-            border-radius: 4px;
-            border: 1px solid var(--neon-red);
-            margin-bottom: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            margin: 0 5px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        .terminal-code {
-            font-family: monospace;
-            color: #34d399;
-            background: #000;
-            padding: 12px;
-            border-radius: 4px;
-            max-height: 150px;
-            overflow-y: auto;
-            margin-bottom: 20px;
-            white-space: pre-wrap;
-            font-size: 13px;
-        }
-
-        /* Варіанти дій */
-        .action-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .action-btn {
-            background: #111827;
-            border: 1px solid #4b5563;
+        .step-indicator.active {
+            border-color: var(--accent-blue);
             color: var(--text-main);
-            padding: 14px;
-            text-align: left;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: monospace;
-            transition: all 0.2s ease;
-            font-size: 14px;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
         }
 
-        .action-btn:hover {
-            border-color: var(--neon-cyan);
-            background: rgba(6, 182, 212, 0.05);
-            box-shadow: 0 0 8px rgba(6, 182, 212, 0.2);
+        .step-indicator.completed {
+            border-color: var(--accent-green);
+            color: var(--accent-green);
+            background: rgba(16, 185, 129, 0.05);
         }
 
-        .action-btn.selected {
-            border-color: var(--neon-cyan);
-            background: rgba(6, 182, 212, 0.15);
-        }
-
-        /* Зворотний зв'язок */
-        .console-feedback {
+        /* Етапи квесту */
+        .quest-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
             display: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .quest-card.active-card {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .theory-box {
+            background: rgba(59, 130, 246, 0.05);
+            border-left: 4px solid var(--accent-blue);
             padding: 15px;
-            border-radius: 6px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            line-height: 1.6;
+        }
+
+        .simulation-box {
+            background: #0f172a;
+            border: 1px dashed var(--accent-yellow);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .simulation-box h3 {
+            color: var(--accent-yellow);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
             margin-top: 15px;
-            font-size: 14px;
-            line-height: 1.5;
         }
 
-        .console-feedback.success {
-            display: block;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--neon-green);
-            color: #34d399;
+        .option-btn {
+            background: #1e293b;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
         }
 
-        .console-feedback.error {
-            display: block;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid var(--neon-red);
-            color: #fca5a5;
+        .option-btn:hover {
+            background: #334155;
+            border-color: var(--accent-blue);
         }
 
-        /* Навігаційні кнопки */
-        .nav-btn {
-            background-color: var(--neon-cyan);
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+        }
+
+        .feedback.incorrect {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
+        }
+
+        .next-btn {
+            background: var(--accent-green);
             color: #000;
             font-weight: bold;
             border: none;
+            padding: 12px 25px;
             border-radius: 6px;
-            padding: 14px;
-            font-size: 16px;
             cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: background 0.2s;
-        }
-
-        .nav-btn:hover {
-            background-color: #22d3ee;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.5);
-        }
-
-        .nav-btn:disabled {
-            background-color: #374151;
-            color: #6b7280;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        /* Екран фінішу */
-        .victory-screen {
-            text-align: center;
+            margin-top: 20px;
             display: none;
-            padding: 20px 0;
+            transition: opacity 0.2s;
         }
 
-        .victory-title {
-            color: var(--neon-green);
-            font-size: 28px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        .next-btn:hover {
+            opacity: 0.9;
         }
 
-        .stats-box {
-            background: #030712;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #374151;
-            margin: 20px auto;
-            max-width: 300px;
+        /* Фінальний екран */
+        .congrats {
+            text-align: center;
+        }
+
+        .congrats h2 {
+            color: var(--accent-green);
+            font-size: 2rem;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>⚡ КІБЕРВАРТА 11-А: СИМУЛЯТОР БЕЗПЕКИ ⚡</h1>
+    <header>
+        <h1>🛡️ КіберКвест: Інформаційна Безпека</h1>
+        <p>Пройди 5 етапів симуляції інцидентів, доведи свої знання та врятуй корпоративну мережу! 💻🔥</p>
+    </header>
 
-    <!-- Карта прогресу -->
+    <!-- Індикатори етапів -->
     <div class="progress-container">
-        <span class="prog-step active" id="ps1">Крок 1 📡</span>
-        <span class="prog-step" id="ps2">Крок 2 🐴</span>
-        <span class="prog-step" id="ps3">Крок 3 💣</span>
-        <span class="prog-step" id="ps4">Крок 4 🎣</span>
-        <span class="prog-step" id="ps5">Крок 5 🧟</span>
+        <div class="step-indicator active" id="ind-1">Крок 1: Загрози</div>
+        <div class="step-indicator" id="ind-2">Крок 2: Шкідливе ПЗ</div>
+        <div class="step-indicator" id="ind-3">Крок 3: Фішинг</div>
+        <div class="step-indicator" id="ind-4">Крок 4: Логічна бомба</div>
+        <div class="step-indicator" id="ind-5">Крок 5: Атака DoS</div>
     </div>
 
-    <!-- КРОК 1 -->
-    <div class="quest-step active" id="step1">
-        <div class="theory-section">
-            <h3>📖 Ключ Теорії: DDoS-атака</h3>
-            <p><strong>За матеріалами лекції:</strong> Атака на відмову в обслуговуванні (Distributed Denial-of-service attack) — це напад на комп'ютерну систему з наміром зробити її ресурси повністю недоступними легітимним користувачам. Захист реалізується через спеціальні програмно-технічні засоби придушення шкідливого обміну в телекомунікаційних мережах.</p>
+    <!-- ЕТАП 1 -->
+    <div class="quest-card active-card" id="step-1">
+        <h2>📌 Крок 1: Класифікація загроз та джерел</h2>
+        <div class="theory-box">
+            <p><strong>📖 Ключ-теорія:</strong> Загрози інформаційній безпеці поділяються за джерелами на природні, технічні та людські чинники. Людські чинники (помилки користувачів або навмисні дії) становлять найбільший відсоток порушень (50-80%). Згідно із цілями впливу, порушуються властивості інформації: <em>конфіденційність, цілісність та доступність</em>.</p>
         </div>
-
-        <div class="simulation-space">
-            <div class="sim-header"><span>[СИМУЛЯЦІЯ_МЕРЕЖІ_v1.0]</span><span>СТАТУС: КРИТИЧНИЙ</span></div>
-            <div class="bug-alert">🚨 БАГ: Сервер школи завалено штучними пакетами трафіку! Доступність = 0%.</div>
-            <div class="terminal-code" id="term1">LOG: [ATTACK] Received 5,000,000 fake requests/sec from IP-Botnet...
-LOG: SYSTEM OVERLOAD! Спроба обробки запитів провалилася...</div>
+        <div class="simulation-box">
+            <h3>⚠️ Симуляція інциденту №1 (Баг системи):</h3>
+            <p>Бухгалтер підприємства випадково відкрив підозрілий додаток до листа від невідомого відправника, внаслідок чого заблокувався доступ до корпоративної бази даних із вимогою викупу. Який це тип джерела загрози та який принцип безпеки порушено?[cite: 1]</p>
             
-            <div class="action-grid">
-                <button class="action-btn" onclick="selectAct(1, 'A', this)">🛠 ДІЯ А: Очистити кеш браузера на шкільному комп'ютері та перезавантажити роутер вручну.</button>
-                <button class="action-btn" onclick="selectAct(1, 'B', this)">🛠 ДІЯ Б: Задіяти апаратні засоби придушення шкідливого трафіку для фільтрації фальшивих пакетів на шлюзі.</button>
-                <button class="action-btn" onclick="selectAct(1, 'V', this)">🛠 ДІЯ В: Вимкнути антивірус, щоб він не споживав оперативну пам'ять сервера під час навантаження.</button>
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(1, false)">A) Природний чинник (блискавка), порушено доступність.</button>
+                <button class="option-btn" onclick="checkAnswer(1, true)">B) Людський чинник (ненавмисні/навмисні дії), порушено доступність та цілісність даних.</button>
+                <button class="option-btn" onclick="checkAnswer(1, false)">C) Технічний чинник (перепад напруги обладнання).</button>
             </div>
-            <div class="console-feedback" id="cf1"></div>
+            <div class="feedback" id="feedback-1"></div>
         </div>
-        <button class="nav-btn" id="nb1" onclick="validateStep(1, 'B', 'Доступ відновлено! Фільтрація трафіку успішно придушила атаку хакерів. Ключ до наступного кроку отримано. 🚀', 'Помилка симуляції! Шкільний комп\'ютер чи відключення антивірусу не зупинять зовнішню глобальну атаку на сервер. Скористайтеся порадою з теорії!')">Запустити очищення системи</button>
+        <button class="next-btn" id="next-1" onclick="nextStep(2)">Перейти до Кроку 2 ➔</button>
     </div>
 
-    <!-- КРОК 2 -->
-    <div class="quest-step" id="step2">
-        <div class="theory-section">
-            <h3>📖 Ключ Теорії: «Троянський кінь»</h3>
+    <!-- ЕТАП 2 -->
+    <div class="quest-card" id="step-2">
+        <h2>🐛 Крок 2: Шкідливе програмне забезпечення (Malware)</h2>
+        <div class="theory-box">
+            <p><strong>📖 Ключ-теорія:</strong> Шкідливе ПЗ включає віруси, черв'яки, трояни, руткіти тощо[cite: 2]. <em>Черв'яки</em> самостійно поширюються мережами, використовуючи вразливості ОС без участі користувача. <em>Трояни</em> маскуються під корисні програми для прихованого несанкціонованого доступу, але не розмножуються самостійно[cite: 2].</p>
+        </div>
+        <div class="simulation-box">
+            <h3>⚠️ Симуляція інциденту №2 (Баг системи):</h3>
+            <p>У системі моніторингу зафіксовано програму, яка не створює своїх копій, але таємно передає зловмиснику паролі доступу та відкриває бекдор (прихований люк). Як класифікується цей об'єкт і як діяти адміністратору?[cite: 2]</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(2, false)">A) Мережевий хробак — ізолювати сегмент мережі та оновити антивірусні базні сигнатури.</button>
+                <button class="option-btn" onclick="checkAnswer(2, true)">B) Програма-«Троян» (Trojan) із функцією захоплення паролів — заблокувати процес, просканувати систему сканером та змінити облікові дані.</button>
+                <button class="option-btn" onclick="checkAnswer(2, false)">C) «Жадібна програма» (greedy program) — обмежити її в процесорному часі.</button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+        </div>
+        <button class="next-btn" id="next-2" onclick="nextStep(3)">Перейти до Кроку 3 ➔</button>
+    </div>
+
+    <!-- ЕТАП 3 -->
+    <div class="quest-card" id="step-3">
+        <h2>🎣 Крок 3: Соціальна інженерія та фішинг</h2>
+        <div class="theory-box">
+            <p><strong>📖 Ключ-теорія:</strong> <em>Фішинг</em> — масове розсилання листів від імені популярних брендів/сервісів з метою крадіжки персональних даних, паролів та доступу до фінансових рахунків[cite: 1]. Спеціальні фальшиві сайти створюються саме для соціальної інженерії.</p>
+        </div>
+        <div class="simulation-box">
+            <h3>⚠️ Симуляція інциденту №3 (Баг системи):</h3>
+            <p>Співробітник отримав терміновий лист нібито від «служби безпеки банку» з вимогою перейти за посиланням `secure-bank-login-update.com` і ввести свої облікові дані для підтвердження рахунку. Ваші дії?[cite: 1]</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(3, false)">A) Швидко ввести дані, оскільки лист позначено як «Терміново».</button>
+                <button class="option-btn" onclick="checkAnswer(3, true)">B) Проігнорувати посилання, не вводити жодних даних, повідомити ІТ-відділ про спробу фішингу.</button>
+                <button class="option-btn" onclick="checkAnswer(3, c=false)">C) Переслати цей лист усім колегам для перевірки.</button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+        </div>
+        <button class="next-btn" id="next-3" onclick="nextStep(4)">Перейти до Кроку 4 ➔</button>
+    </div>
+
+    <!-- ЕТАП 4 -->
+    <div class="quest-card" id="step-4">
+        <h2>💣 Крок 4: Логічні та часові бомби</h2>
+        <div class="theory-box">
+            <p><strong>📖 Ключ-теорія:</strong> <em>«Логічні бомби»</em> — невеликі програмні закладки, які впроваджуються в систему і спрацьовують лише при настанні певної події чи часу (часова бомба), після чого виводять систему з ладу або знищують дані[cite: 2].</p>
+        </div>
+        <div class="simulation-box">
+            <h3>⚠️ Симуляція інциденту №4 (Баг системи):</h3>
+            <p>Звільнений розробник залишив у корпоративному ПЗ прихований код, який має автоматично видалити базу даних 1-го числа наступного місяця, якщо не буде надіслано спеціальний цифровий код-сигнал. Що необхідно зробити адміністратору?[cite: 2]</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(4, true)">B) Провести аудит вихідного коду (code review), виявити аномальні тригери та видалити програмну закладку, паралельно зробивши резервну копію (бекап).</button>
+                <button class="option-btn" onclick="checkAnswer(4, false)">A) Просто змінити пароль адміністратора домену.</button>
+                <button class="option-btn" onclick="checkAnswer(4, false)">C) Увімкнути звичайний брандмауер (Firewall).</button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+        </div>
+        <button class="next-btn" id="next-4" onclick="nextStep(5)">Перейти до Кроку 5 ➔</button>
+    </div>
+
+    <!-- ЕТАП 5 -->
+    <div class="quest-card" id="step-5">
+        <h2>🌐 Крок 5: Атаки на відмову в обслуговуванні (DoS / DDoS)</h2>
+        <div class="theory-box">
+            <p><strong>📖 Ключ-теорія:</strong> <em>DDoS-атака</em> (Distributed Denial-of-service) — напад на комп'ютерну систему з наміром зробити її ресурси недоступними для легітимних користувачів шляхом перевантаження запитами з бот-мереж (botnet)[cite: 1].</p>
+        </div>
+        <div class="simulation-box">
+            <h3>⚠️ Симуляція інциденту №5 (Баг системи):</h3>
+            <p>Корпоративний вебсайт освітнього закладу раптово почав отримувати мільйони запитів за секунду з тисяч IP-адрес по всьому світу, через що сервер «ліг» і користувачі не можуть увійти. Оберіть правильний шлях протидії[cite: 1]:</p>
+            
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(5, false)">A) Вимкнути інтернет-кабель назавжди.</button>
+                <button class="option-btn" onclick="checkAnswer(5, true)">B) Підключити систему захисту від DDoS (наприклад, Cloudflare / фільтрацію трафіку за геозонами та поведінковими факторами) і заблокувати аномальні бот-мережі.</button>
+                <button class="option-btn" onclick="checkAnswer(5, false)">C) Надіслати лист з вимогою припинити атаку на пошту хакерів.</button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+        </div>
+        <button class="next-btn" id="next-5" onclick="nextStep(6)">Завершити квест 🎉</button>
+    </div>
+
+    <!-- ФІНАЛ -->
+    <div class="quest-card congrats" id="step-6">
+        <h2>🏆 Вітаємо! Ви успішно пройшли квест!</h2>
+        <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.6;">
+            Ви чудово впоралися з аналізом загроз, розпізнали шкідливе ПЗ, протистояли фішингу, знешкодили логічну бомбу та відбили DDoS-атаку! 🚀<br>
+            Ваші знання з інформаційної безпеки повністю відповідають рівню сучасного фахівця! 💻🔥
+        </p>
+        <button class="next-btn" style="display: inline-block;" onclick="location.reload()">🔄 Пройти квест знову</button>
+    </div>
+</div>
+
+<script>
+    function checkAnswer(step, isCorrect) {
+        const feedback = document.getElementById(`feedback-${step}`);
+        const nextBtn = document.getElementById(`next-${step}`);
+        
+        // Вимикаємо кнопки після вибору на поточному кроці
+        const card = document.getElementById(`step-${step}`);
+        const buttons = card.querySelectorAll('.option-btn');
+        buttons.forEach(btn => btn.style.pointerEvents = 'none');
+
+        if (isCorrect) {
+            feedback.textContent = "✅ Правильно! Ви обрали безпечний та ефективний шлях дій.";
+            feedback.className = "feedback correct";
+            feedback.style.display = "block";
+            nextBtn.style.display = "inline-block";
+            
+            // Оновлюємо індикатор
+            document.getElementById(`ind-${step}`).classList.add('completed');
+        } else {
+            feedback.textContent = "❌ Помилка у виборі! Це призведе до ускладнення інциденту. Спробуйте оновити сторінку та обрати іншу стратегію.";
+            feedback.className = "feedback incorrect";
+            feedback.style.display = "block";
+        }
+    }
+
+    function nextStep(stepNumber) {
+        // Ховаємо всі картки
+        document.querySelectorAll('.quest-card').forEach(card => {
+            card.classList.remove('active-card');
+        });
+        
+        // Прибираємо активний клас з індикаторів
+        document.querySelectorAll('.step-indicator').forEach(ind => {
+            ind.classList.remove('active');
+        });
+
+        // Показуємо потрібну картку
+        document.getElementById(`step-${stepNumber}`).classList.add('active-card');
+        
+        if(stepNumber <= 5) {
+            document.getElementById(`ind-${stepNumber}`).classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>
