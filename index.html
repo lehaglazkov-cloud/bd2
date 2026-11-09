@@ -663,7 +663,8 @@
 
     function checkAnswer(step, isCorrect) {
         playClickSound();
-        const feedback = document.getElementById(`feedback-${step}`); const card = document.getElementById(`step-${step}`);
+        const feedback = document.getElementById(`feedback-${step}`);
+        const card = document.getElementById(`step-${step}`);
         const buttons = card.querySelectorAll('.option-btn');
         
         buttons.forEach(btn => {
@@ -677,7 +678,11 @@
             let nextStepNum = step + 1;
             
             feedback.innerHTML = `✅ Баг успішно усунуто! Система стабільна.<br><br>
-                <button class="next-step-btn" onclick="nextStep(${nextStepNum})">Перейти до наступного етапу ➔</button>`; feedback.className = "feedback correct"; feedback.style.display = "block";  document.getElementById(`ind-${step}`).classList.add('completed');
+                <button class="next-step-btn" onclick="nextStep(${nextStepNum})">Перейти до наступного етапу ➔</button>`;
+            feedback.className = "feedback correct";
+            feedback.style.display = "block";
+            
+            document.getElementById(`ind-${step}`).classList.add('completed');
         } else {
             playErrorSound();
             incorrectCount++;
@@ -702,7 +707,13 @@
             generateFinalStats();
         }
 
-        const targetCard = document.getElementById(`step-${stepNumber}`); if (targetCard) { targetCard.classList.add('active-card'); }  if (stepNumber <= 10) { const targetInd = document.getElementById(`ind-${stepNumber}`);
+        const targetCard = document.getElementById(`step-${stepNumber}`);
+        if (targetCard) {
+            targetCard.classList.add('active-card');
+        }
+        
+        if (stepNumber <= 10) {
+            const targetInd = document.getElementById(`ind-${stepNumber}`);
             if (targetInd) {
                 targetInd.classList.add('active');
             }
@@ -724,3 +735,24 @@
             <p>✅ <strong>Правильних відповідей:</strong> ${correctCount} з ${totalSteps}</p>
             <p>❌ <strong>Неправильних відповідей:</strong> ${incorrectCount}</p>
             <p>🎯 <strong>Підсумковий бал:</strong> <span style="color: var(--accent-yellow); font-size: 1.3rem; font-weight: bold;">${score} / 10</span></p>
+        `;
+
+        const msgContainer = document.getElementById('final-message');
+        
+        if (score < 7) {
+            msgContainer.innerHTML = `<span style="color: var(--accent-red);">🔄 Потрібно повторити матеріал! Система пропонує пройти квест ще раз, щоб покращити результати та впевнено володіти темою. 💪</span>`;
+        } else if (score === 8) {
+            msgContainer.innerHTML = `<span style="color: var(--accent-yellow);">👍 Гарний результат! Ви чудово орієнтуєтеся в основах інформаційної безпеки. ⭐</span>`;
+        } else if (score === 9) {
+            msgContainer.innerHTML = `<span style="color: var(--accent-blue);">🌟 Молодець! Високий рівень знань та чудове розуміння кіберзагроз! 🚀</span>`;
+        } else {
+            msgContainer.innerHTML = `<span style="color: var(--accent-green);">👑 Чудова робота кібергенію! Бездоганний захист бази даних! Абсолютний результат! 🏆🔥</span>`;
+        }
+    }
+
+    // Запускаємо генерацію випадкового порядку варіантів відповідей при завантаженні сторінки
+    window.onload = initOptions;
+</script>
+
+</body>
+</html>
