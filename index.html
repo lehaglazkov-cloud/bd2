@@ -281,13 +281,13 @@
     </div>
 
     <!-- ЕТАП 1 -->
-    <div class="quest-card active-card" id="step-1">
+    <div class="quest-card active-card" id="step-1" data-step="1">
         <h2>🚨 Етап 1: Аналіз джерел загроз</h2>
         <div class="problem-alert">
             <p><strong>⚠️ Повідомлення системи:</strong> Головну базу даних заблоковано. У логах зафіксовано несанкціоноване втручання та пошкодження записів.</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> Джерела загроз бувають природними, технічними та людськими. Статистика показує, що помилкові чи навмисні дії людей становлять найбільшу частку (50-80%) порушень безпеки.</p>
+            <p><strong>📖 Ключ етапу:</strong> Джерела загроз бувають природними, технічними та людськими. Статистика показує, що помилкові чи навмисні дії людей становлять найбільшу частку (50-80%) порушень безпеки[cite: 5].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція таблиці інцидентів (`sys_audit`):</h3>
@@ -296,23 +296,21 @@
                 <tr><td>301</td><td>Unauthorized Data Modification</td><td>Human Error / Operator Action</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Визначте основне джерело порушення безпеки за логами та теорією:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(1, false)">A) Технічний чинник (перегорання процесора).</button>
-                <button class="option-btn" onclick="checkAnswer(1, true)">B) Людський чинник (помилкові чи навмисні дії користувача або персоналу).</button>
-                <button class="option-btn" onclick="checkAnswer(1, false)">C) Природний чинник (стихійне лихо / блискавка).</button>
+            <div class="options-grid" id="options-1">
+                <!-- Варіанти будуть згенеровані випадковим чином через JS -->
             </div>
             <div class="feedback" id="feedback-1"></div>
         </div>
     </div>
 
     <!-- ЕТАП 2 -->
-    <div class="quest-card" id="step-2">
+    <div class="quest-card" id="step-2" data-step="2">
         <h2>🔒 Етап 2: Порушення властивостей інформації</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Зловмисник отримав повний адміністративний доступ до керування інформаційною системою.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Зловмисник отримав повний адміністративний доступ до керування інформаційною системою[cite: 5].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> Інформаційна безпека базується на захисті трьох ключових властивостей: конфіденційність, цілісність та доступність. Отримання повного контролю над системою та зміна прав користувачів безпосередньо загрожують цим аспектам.</p>
+            <p><strong>📖 Ключ етапу:</strong> Інформаційна безпека базується на захисті трьох ключових властивостей: конфіденційність, цілісність та доступність. Отримання повного контролю над системою та зміна прав користувачів безпосередньо загрожують цим аспектам[cite: 5].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція прав доступу (`access_control`):</h3>
@@ -321,23 +319,19 @@
                 <tr><td>Guest_External</td><td>Full System Administrator</td><td>COMPROMISED</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Який принцип безпеки порушено при отриманні повного керування системою сторонньою особою?</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(2, false)">A) Лише старіння носіїв інформації.</button>
-                <button class="option-btn" onclick="checkAnswer(2, true)">B) Конфіденційність, цілісність та доступність інформаційної системи.</button>
-                <button class="option-btn" onclick="checkAnswer(2, false)">C) Фізична цілісність корпусу системного блока.</button>
-            </div>
+            <div class="options-grid" id="options-2"></div>
             <div class="feedback" id="feedback-2"></div>
         </div>
     </div>
 
     <!-- ЕТАП 3 -->
-    <div class="quest-card" id="step-3">
+    <div class="quest-card" id="step-3" data-step="3">
         <h2>🐛 Етап 3: Мережеві черв'яки (Worms)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> У внутрішній мережі зафіксовано лавиноподібне самокопіювання коду через уразливості в операційній системі без участі користувачів.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> У внутрішній мережі зафіксовано лавиноподібне самокопіювання коду через уразливості в операційній системі без участі користувачів[cite: 4].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Мережеві хробаки* — різновид шкідливих програм, які проникають на комп'ютер без участі користувача, використовуючи вразливості («дірки») в ПО та автоматично розмножуючись мережами.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Мережеві хробаки* — різновид шкідливих програм, які проникають на комп'ютер без участі користувача, використовуючи вразливості («дірки») в ПО та автоматично розмножуючись мережами[cite: 4].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція моніторингу трафіку (`net_worms`):</h3>
@@ -346,23 +340,19 @@
                 <tr><td>778</td><td>Exploiting OS Vulnerabilities</td><td>None (Autonomous replication)</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Класифікуйте загрозу та оберіть правильну дію для локалізації:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(3, false)">A) Програма-«Троян» — налаштувати перегляд рекламних банерів.</button>
-                <button class="option-btn" onclick="checkAnswer(3, true)">B) Мережевий хробак — ізолювати заражені сегменти мережі та закрити вразливості (патчі ОС).</button>
-                <button class="option-btn" onclick="checkAnswer(3, false)">C) Спам-розсилка — очистити папку «Вхідні».</button>
-            </div>
+            <div class="options-grid" id="options-3"></div>
             <div class="feedback" id="feedback-3"></div>
         </div>
     </div>
 
     <!-- ЕТАП 4 -->
-    <div class="quest-card" id="step-4">
+    <div class="quest-card" id="step-4" data-step="4">
         <h2>🐎 Етап 4: Троянські програми (Trojan Horse)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Під виглядом корисної утиліти на сервер встановлено прихований компонент, який передає паролі на зовнішній сервер, не створюючи власних копій.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Під виглядом корисної утиліти на сервер встановлено прихований компонент, який передає паролі на зовнішній сервер, не створюючи власних копій[cite: 4].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Троянський кінь* — шкідлива програма для несанкціонованого доступу, яка не має механізму створення власних копій (на відміну від вірусів), а маскується під корисне ПЗ.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Троянський кінь* — шкідлива програма для несанкціонованого доступу, яка не має механізму створення власних копій (на відміну від вірусів), а маскується під корисне ПЗ[cite: 4].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція процесів (`app_manager`):</h3>
@@ -371,23 +361,19 @@
                 <tr><td>Free_Optimizer.exe</td><td>Hidden Backdoor / Password Grabber</td><td>Disabled (No copies)</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Визначте тип шкідливого ПЗ і правильний спосіб захисту:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(4, false)">A) Апаратна несправність блоку живлення.</button>
-                <button class="option-btn" onclick="checkAnswer(4, true)">B) Програма-«Троян» — видалити шкідливий процес, перевірити автозапуск та змінити паролі.</button>
-                <button class="option-btn" onclick="checkAnswer(4, false)">C) Старий магнітний носій даних.</button>
-            </div>
+            <div class="options-grid" id="options-4"></div>
             <div class="feedback" id="feedback-4"></div>
         </div>
     </div>
 
     <!-- ЕТАП 5 -->
-    <div class="quest-card" id="step-5">
+    <div class="quest-card" id="step-5" data-step="5">
         <h2>🎣 Етап 5: Фішинг та підроблені сайти</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Масова розсилка листів від імені адміністрації змусила співробітників ввести корпоративні облікові дані на фішинговому сайті.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Масова розсилка листів від імені адміністрації змусила співробітників ввести корпоративні облікові дані на фішинговому сайті[cite: 5].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Фішинг* — масове розсилання електронних листів і створення фальшивих сайтів із метою викрадення персональних даних, паролів та доступу до ресурсів.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Фішинг* — масове розсилання електронних листів і створення фальшивих сайтів із метою викрадення персональних даних, паролів та доступу до ресурсів[cite: 5].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція звернень до шлюзу (`phishing_logs`):</h3>
@@ -396,23 +382,19 @@
                 <tr><td>college-admin-secure-login.net</td><td>Social Engineering / Credential Theft</td><td>Credentials Entered</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Оберіть правильну стратегію безпеки проти фішингу:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(5, false)">A) Надіслати гроші за вказаними в листі реквізитами.</button>
-                <button class="option-btn" onclick="checkAnswer(5, true)">B) Заблокувати фішинговий домен, анулювати скомпрометовані сесії та провести інструктаж персоналу.</button>
-                <button class="option-btn" onclick="checkAnswer(5, false)">C) Увімкнути антивірусне сканування оперативної пам'яті.</button>
-            </div>
+            <div class="options-grid" id="options-5"></div>
             <div class="feedback" id="feedback-5"></div>
         </div>
     </div>
 
     <!-- ЕТАП 6 -->
-    <div class="quest-card" id="step-6">
+    <div class="quest-card" id="step-6" data-step="6">
         <h2>💣 Етап 6: Логічні та часові бомби</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> У базі даних виявлено прихований програмний код, який має активуватися в конкретну дату й знищити таблиці.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> У базі даних виявлено прихований програмний код, який має активуватися в конкретну дату й знищити таблиці[cite: 4].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Логічна бомба* (або часова бомба) — програма або закладка, яка спрацьовує при настанні певної умови чи часу, знищуючи або спотворюючи інформаційні ресурси.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Логічна бомба* (або часова бомба) — програма або закладка, яка спрацьовує при настанні певної умови чи часу, знищуючи або спотворюючи інформаційні ресурси[cite: 4].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція тригерів БД (`triggers_check`):</h3>
@@ -421,23 +403,19 @@
                 <tr><td>TRG_BOMB_01</td><td>IF CURRENT_DATE >= '2026-07-01'</td><td>DROP DATABASE records;</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Як знешкодити логічну бомбу в системі?</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(6, false)">A) Перевести настільний годинник комп'ютера на 2010 рік.</button>
-                <button class="option-btn" onclick="checkAnswer(6, true)">B) Зробити аудит коду, видалити програмну закладку та відновити актуальну цілісність із резервної копії.</button>
-                <button class="option-btn" onclick="checkAnswer(6, false)">C) Перепідключити мережевий кабель.</button>
-            </div>
+            <div class="options-grid" id="options-6"></div>
             <div class="feedback" id="feedback-6"></div>
         </div>
     </div>
 
     <!-- ЕТАП 7 -->
-    <div class="quest-card" id="step-7">
+    <div class="quest-card" id="step-7" data-step="7">
         <h2>🧟 Етап 7: Програми-зомбі та жадібні програми</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Ресурси сервера вичерпано через фоновий процес, який монополізує процесорний час і таємно залучає систему до атак.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Ресурси сервера вичерпано через фоновий процес, який монополізує процесорний час і таємно залучає систему до атак[cite: 4].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Зомбі* — програми, що приховано підключаються до ПК для запуску атак. *«Жадібні програми»* монополізують системні ресурси, порушуючи доступність інших додатків.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Зомбі* — програми, що приховано підключаються до ПК для запуску атак. *«Жадібні програми»* монополізують системні ресурси, порушуючи доступність інших додатків[cite: 4].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція завантаження CPU (`resource_monitor`):</h3>
@@ -446,23 +424,19 @@
                 <tr><td>greedy_daemon.exe</td><td>99.8%</td><td>Monopolizing CPU / Remote Botnet Node</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Оберіть дію адміністратора для відновлення доступності:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(7, false)">A) Залишити процес працювати задля самовираження розробника.</button>
-                <button class="option-btn" onclick="checkAnswer(7, true)">B) Завершити процес-зомбі, обмежити ресурси та перевірити систему фаєрволом.</button>
-                <button class="option-btn" onclick="checkAnswer(7, false)">C) Змінити фоновий малюнок робочого столу.</button>
-            </div>
+            <div class="options-grid" id="options-7"></div>
             <div class="feedback" id="feedback-7"></div>
         </div>
     </div>
 
     <!-- ЕТАП 8 -->
-    <div class="quest-card" id="step-8">
+    <div class="quest-card" id="step-8" data-step="8">
         <h2>🔑 Етап 8: Захоплювачі паролів (Password Grabbers)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Виявлено утиліту прихованого адміністрування та кейлоггер, що перехоплюють натискання клавіш користувачів.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Виявлено утиліту прихованого адміністрування та кейлоггер, що перехоплюють натискання клавіш користувачів[cite: 4].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *Захоплювачі паролів* та *утиліти прихованого адміністрування (backdoor)* призначені для крадіжки облікових даних і несанкціонованого віддаленого контролю за системою без відома користувача.</p>
+            <p><strong>📖 Ключ етапу:</strong> *Захоплювачі паролів* та *утиліти прихованого адміністрування (backdoor)* призначені для крадіжки облікових даних і несанкціонованого віддаленого контролю за системою без відома користувача[cite: 4].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція перехоплення клавіатури (`key_loggers`):</h3>
@@ -471,23 +445,19 @@
                 <tr><td>hook_dll.exe</td><td>Keyboard Buffer / Password Input</td><td>ACTIVE & SNIFFING</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Який комплекс заходів зупинить крадіжку паролів?</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(8, false)">A) Написати паперовий стікер з новим паролем і наклеїти на монітор.</button>
-                <button class="option-btn" onclick="checkAnswer(8, true)">B) Просканувати систему антивірусом, видалити бекдор, завершити шкідливі хуки та оновити паролі.</button>
-                <button class="option-btn" onclick="checkAnswer(8, false)">C) Перезавантажити браузер.</button>
-            </div>
+            <div class="options-grid" id="options-8"></div>
             <div class="feedback" id="feedback-8"></div>
         </div>
     </div>
 
     <!-- ЕТАП 9 -->
-    <div class="quest-card" id="step-9">
+    <div class="quest-card" id="step-9" data-step="9">
         <h2>🌐 Етап 9: DDoS-атаки (Розподілені атаки на відмову в обслуговуванні)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Повідомлення системи:</strong> Вхідний шлюз бази даних завалено мільйонами запитів з ботнет-мережі, легітимні користувачі не можуть підключитися.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Вхідний шлюз бази даних завалено мільйонами запитів з ботнет-мережі, легітимні користувачі не можуть підключитися[cite: 5].</p>
         </div>
         <div class="theory-box">
-            <p><strong>📖 Ключ етапу:</strong> *DDoS-атака* (Denial-of-service) — напад на систему з метою зробити її ресурси недоступними для користувачів, для яких вона призначена (руйнування *доступності*).</p>
+            <p><strong>📖 Ключ етапу:</strong> *DDoS-атака* (Denial-of-service) — напад на систему з метою зробити її ресурси недоступними для користувачів, для яких вона призначена (руйнування *доступності*)[cite: 5].</p>
         </div>
         <div class="db-simulation">
             <h3>🗄️ Симуляція шлюзу трафіку (`gateway_ddos`):</h3>
@@ -496,11 +466,7 @@
                 <tr><td>Distributed Botnet (IPs)</td><td>1,200,000 req/sec</td><td>SERVICE UNAVAILABLE (DoS)</td></tr>
             </table>
             <p><strong>Баг у системі:</strong> Оберіть інструмент протидії DDoS-атаці:</p>
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(9, false)">A) Вимкнути серверний маршрутизатор назавжди.</button>
-                <button class="option-btn" onclick="checkAnswer(9, true)">B) Підключити систему фільтрації трафіку (Anti-DDoS), заблокувати аномальні бот-мережі та стабілізувати доступність.</button>
-                <button class="option-btn" onclick="checkAnswer(9, false)">C) Надіслати електронного листа з проханням припинити напад.</button>
-            </div>
+            <div class="options-grid" id="options-9"></div>
             <div class="feedback" id="feedback-9"></div>
         </div>
     </div>
@@ -524,6 +490,84 @@
 </div>
 
 <script>
+    // Набір питань та варіантів для перемішування після кожного запуску
+    const questData = {
+        1: [
+            { text: "A) Технічний чинник (перегорання процесора).", correct: false },
+            { text: "B) Людський чинник (помилкові чи навмисні дії користувача або персоналу)[cite: 5].", correct: true },
+            { text: "C) Природний чинник (стихійне лихо / блискавка)[cite: 5].", correct: false }
+        ],
+        2: [
+            { text: "A) Лише старіння носіїв інформації.", correct: false },
+            { text: "B) Конфіденційність, цілісність та доступність інформаційної системи[cite: 5].", correct: true },
+            { text: "C) Фізична цілісність корпусу системного блока.", correct: false }
+        ],
+        3: [
+            { text: "A) Програма-«Троян» — налаштувати перегляд рекламних банерів.", correct: false },
+            { text: "B) Мережевий хробак — ізолювати заражені сегменти мережі та закрити вразливості (патчі ОС)[cite: 4].", correct: true },
+            { text: "C) Спам-розсилка — очистити папку «Вхідні»[cite: 5].", correct: false }
+        ],
+        4: [
+            { text: "A) Апаратна несправність блоку живлення.", correct: false },
+            { text: "B) Програма-«Троян» — видалити шкідливий процес, перевірити автозапуск та змінити паролі[cite: 4].", correct: true },
+            { text: "C) Старий магнітний носій даних[cite: 5].", correct: false }
+        ],
+        5: [
+            { text: "A) Надіслати гроші за вказаними в листі реквізитами.", correct: false },
+            { text: "B) Заблокувати фішинговий домен, анулювати скомпрометовані сесії та провести інструктаж персоналу[cite: 5].", correct: true },
+            { text: "C) Увімкнути антивірусне сканування оперативної пам'яті.", correct: false }
+        ],
+        6: [
+            { text: "A) Перевести настільний годинник комп'ютера на 2010 рік.", correct: false },
+            { text: "B) Зробити аудит коду, видалити програмну закладку та відновити актуальну цілісність із резервної копії[cite: 4].", correct: true },
+            { text: "C) Перепідключити мережевий кабель[cite: 4].", correct: false }
+        ],
+        7: [
+            { text: "A) Залишити процес працювати задля самовираження розробника[cite: 5].", correct: false },
+            { text: "B) Завершити процес-зомбі, обмежити ресурси та перевірити систему фаєрволом[cite: 4].", correct: true },
+            { text: "C) Змінити фоновий малюнок робочого столу.", correct: false }
+        ],
+        8: [
+            { text: "A) Написати паперовий стікер з новим паролем і наклеїти на монітор.", correct: false },
+            { text: "B) Просканувати систему антивірусом, видалити бекдор, завершити шкідливі хуки та оновити паролі[cite: 4].", correct: true },
+            { text: "C) Перезавантажити браузер.", correct: false }
+        ],
+        9: [
+            { text: "A) Вимкнути серверний маршрутизатор назавжди.", correct: false },
+            { text: "B) Підключити систему фільтрації трафіку (Anti-DDoS), заблокувати аномальні бот-мережі та стабілізувати доступність[cite: 5].", correct: true },
+            { text: "C) Надіслати електронного листа з проханням припинити напад[cite: 5].", correct: false }
+        ]
+    };
+
+    // Алгоритм тасування Фішера — Єйтса для випадкового перемішування масиву
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Рендеринг варіантів відповідей при завантаженні сторінки
+    function initOptions() {
+        for (let step = 1; step <= 9; step++) {
+            const container = document.getElementById(`options-${step}`);
+            if (!container) continue;
+            
+            // Клонуємо та перемішуємо масив варіантів для цього етапу
+            let shuffledOptions = shuffleArray([...questData[step]]);
+            
+            container.innerHTML = "";
+            shuffledOptions.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt.text;
+                btn.onclick = () => checkAnswer(step, opt.correct);
+                container.appendChild(btn);
+            });
+        }
+    }
+
     // Ініціалізація аудіо-контексту для звукових ефектів
     let audioCtx = null;
     function getAudioContext() {
@@ -619,11 +663,9 @@
 
     function checkAnswer(step, isCorrect) {
         playClickSound();
-        const feedback = document.getElementById(`feedback-${step}`);
-        const card = document.getElementById(`step-${step}`);
+        const feedback = document.getElementById(`feedback-${step}`); const card = document.getElementById(`step-${step}`);
         const buttons = card.querySelectorAll('.option-btn');
         
-        // Додаємо обробку кліків на кнопки для звуку
         buttons.forEach(btn => {
             btn.addEventListener('click', playClickSound, { once: true });
         });
@@ -635,11 +677,7 @@
             let nextStepNum = step + 1;
             
             feedback.innerHTML = `✅ Баг успішно усунуто! Система стабільна.<br><br>
-                <button class="next-step-btn" onclick="nextStep(${nextStepNum})">Перейти до наступного етапу ➔</button>`;
-            feedback.className = "feedback correct";
-            feedback.style.display = "block";
-            
-            document.getElementById(`ind-${step}`).classList.add('completed');
+                <button class="next-step-btn" onclick="nextStep(${nextStepNum})">Перейти до наступного етапу ➔</button>`; feedback.className = "feedback correct"; feedback.style.display = "block";  document.getElementById(`ind-${step}`).classList.add('completed');
         } else {
             playErrorSound();
             incorrectCount++;
@@ -664,13 +702,7 @@
             generateFinalStats();
         }
 
-        const targetCard = document.getElementById(`step-${stepNumber}`);
-        if (targetCard) {
-            targetCard.classList.add('active-card');
-        }
-        
-        if (stepNumber <= 10) {
-            const targetInd = document.getElementById(`ind-${stepNumber}`);
+        const targetCard = document.getElementById(`step-${stepNumber}`); if (targetCard) { targetCard.classList.add('active-card'); }  if (stepNumber <= 10) { const targetInd = document.getElementById(`ind-${stepNumber}`);
             if (targetInd) {
                 targetInd.classList.add('active');
             }
@@ -692,21 +724,3 @@
             <p>✅ <strong>Правильних відповідей:</strong> ${correctCount} з ${totalSteps}</p>
             <p>❌ <strong>Неправильних відповідей:</strong> ${incorrectCount}</p>
             <p>🎯 <strong>Підсумковий бал:</strong> <span style="color: var(--accent-yellow); font-size: 1.3rem; font-weight: bold;">${score} / 10</span></p>
-        `;
-
-        const msgContainer = document.getElementById('final-message');
-        
-        if (score < 7) {
-            msgContainer.innerHTML = `<span style="color: var(--accent-red);">🔄 Потрібно повторити матеріал! Система пропонує пройти квест ще раз, щоб покращити результати та впевнено володіти темою. 💪</span>`;
-        } else if (score === 8) {
-            msgContainer.innerHTML = `<span style="color: var(--accent-yellow);">👍 Гарний результат! Ви чудово орієнтуєтеся в основах інформаційної безпеки. ⭐</span>`;
-        } else if (score === 9) {
-            msgContainer.innerHTML = `<span style="color: var(--accent-blue);">🌟 Молодець! Високий рівень знань та чудове розуміння кіберзагроз! 🚀</span>`;
-        } else {
-            msgContainer.innerHTML = `<span style="color: var(--accent-green);">👑 Чудова робота кібергенію! Бездоганний захист бази даних! Абсолютний результат! 🏆🔥</span>`;
-        }
-    }
-</script>
-
-</body>
-</html>
