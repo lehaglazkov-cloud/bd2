@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>КіберКвест: Захист Бази Даних 💻🔒</title>
+    <title>КіберКвест: Порятунок Бази Даних 💻🛡️</title>
     <style>
         :root {
-            --bg-color: #070913;
+            --bg-color: #060913;
             --card-bg: #0f172a;
             --accent-green: #10b981;
             --accent-red: #ef4444;
@@ -47,40 +47,44 @@
         }
 
         header h1 {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             color: var(--accent-green);
             margin-bottom: 8px;
         }
 
         header p {
             color: var(--text-muted);
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
 
-        /* Прогрес-бар */
+        /* Прогрес-бар з 10 етапів */
         .progress-container {
             display: flex;
             justify-content: space-between;
             margin-bottom: 25px;
-            gap: 5px;
+            gap: 3px;
+            overflow-x: auto;
+            padding-bottom: 5px;
         }
 
         .step-indicator {
             flex: 1;
             text-align: center;
-            padding: 8px;
+            padding: 6px 4px;
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.85rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
             color: var(--text-muted);
+            min-width: 75px;
             transition: all 0.3s ease;
         }
 
         .step-indicator.active {
             border-color: var(--accent-blue);
             color: var(--text-main);
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+            font-weight: bold;
         }
 
         .step-indicator.completed {
@@ -97,7 +101,7 @@
             padding: 25px;
             margin-bottom: 20px;
             display: none;
-            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.7);
         }
 
         .quest-card.active-card {
@@ -112,17 +116,18 @@
 
         h2 {
             color: var(--accent-blue);
-            margin-bottom: 15px;
-            font-size: 1.4rem;
+            margin-bottom: 12px;
+            font-size: 1.35rem;
         }
 
         .problem-alert {
             background: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--accent-red);
-            padding: 15px;
+            padding: 12px 15px;
             margin-bottom: 15px;
             border-radius: 0 8px 8px 0;
             color: #fca5a5;
+            font-size: 0.95rem;
         }
 
         .theory-box {
@@ -131,35 +136,35 @@
             padding: 15px;
             margin-bottom: 20px;
             border-radius: 0 8px 8px 0;
-            line-height: 1.6;
+            line-height: 1.5;
             font-size: 0.95rem;
         }
 
-        /* Інтерактивна симуляція БД / Термінал */
+        /* Симуляція БД та Термінала */
         .db-simulation {
             background: #020617;
             border: 1px dashed var(--accent-yellow);
-            padding: 20px;
+            padding: 18px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .db-simulation h3 {
             color: var(--accent-yellow);
-            margin-bottom: 12px;
-            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
         }
 
         .db-table-preview {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 15px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .db-table-preview th, .db-table-preview td {
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
+            padding: 6px 10px;
             text-align: left;
         }
 
@@ -174,8 +179,8 @@
 
         .options-grid {
             display: grid;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 12px;
         }
 
         .option-btn {
@@ -187,7 +192,7 @@
             text-align: left;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
         .option-btn:hover {
@@ -196,12 +201,12 @@
         }
 
         .feedback {
-            margin-top: 15px;
-            padding: 15px;
+            margin-top: 12px;
+            padding: 12px;
             border-radius: 8px;
             font-weight: bold;
             display: none;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
         }
 
         .feedback.correct {
@@ -243,42 +248,43 @@
 <div class="container">
     <header>
         <h1>🛡️ КіберКвест: Операція «Врятувати Базу Даних»</h1>
-        <p>Критична загроза серверу коледжу! Використайте теорію та вирішіть баги безпеки, щоб відновити систему 💻🔥</p>
+        <p>Критичний збій та багатовекторна атака на сервер коледжу! Пройди 10 етапів, щоб відновити систему 💻🔥</p>
     </header>
 
-    <!-- Прогрес-бар -->
+    <!-- Прогрес-бар (10 етапів) -->
     <div class="progress-container">
-        <div class="step-indicator active" id="ind-1">1. Джерела загроз</div>
-        <div class="step-indicator" id="ind-2">2. Шкідливе ПЗ</div>
-        <div class="step-indicator" id="ind-3">3. Соц. інженерія</div>
-        <div class="step-indicator" id="ind-4">4. Логічна бомба</div>
-        <div class="step-indicator" id="ind-5">5. DDoS-атака</div>
+        <div class="step-indicator active" id="ind-1">1. Джерела</div>
+        <div class="step-indicator" id="ind-2">2. Властивості</div>
+        <div class="step-indicator" id="ind-3">3. Хробаки</div>
+        <div class="step-indicator" id="ind-4">4. Трояни</div>
+        <div class="step-indicator" id="ind-5">5. Фішинг</div>
+        <div class="step-indicator" id="ind-6">6. Лог. бомба</div>
+        <div class="step-indicator" id="ind-7">7. Зомбі ПЗ</div>
+        <div class="step-indicator" id="ind-8">8. Паролі</div>
+        <div class="step-indicator" id="ind-9">9. DDoS атака</div>
+        <div class="step-indicator" id="ind-10">10. Фінал</div>
     </div>
 
     <!-- ЕТАП 1 -->
     <div class="quest-card active-card" id="step-1">
-        <h2>🚨 Проблема: Аварійне блокування сховища</h2>
+        <h2>🚨 Етап 1: Аналіз джерел загроз</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Аварійне повідомлення термінала:</strong> Головна база даних учбового закладу раптово заблокована. Журнал подій показує помилку цілісності даних через несанкціоноване втручання.</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Головну базу даних заблоковано. У логах зафіксовано несанкціоноване втручання та пошкодження записів.</p>
         </div>
-        
         <div class="theory-box">
-            <p><strong>📖 Теоретичний ключ етапу:</strong> Загрози інформаційній безпеці поділяються на природні, технічні та людські чинники. Найбільший відсоток порушень (50-80%) становлять саме помилкові або навмисні дії людей[cite: 3]. Порушення властивостей інформації стосуються <em>конфіденційності, цілісності та доступності</em>[cite: 3].</p>
+            <p><strong>📖 Ключ етапу:</strong> Джерела загроз бувають природними, технічними та людськими. Статистика показує, що помилкові чи навмисні дії людей становлять найбільшу частку (50-80%) порушень безпеки[cite: 5].</p>
         </div>
-
         <div class="db-simulation">
-            <h3>🗄️ Симуляція таблиці інцидентів БД (`sys_logs`):</h3>
+            <h3>🗄️ Симуляція таблиці інцидентів (`sys_audit`):</h3>
             <table class="db-table-preview">
-                <tr><th>ID</th><th>Event_Type</th><th>Source</th><th>Impact_Status</th></tr>
-                <tr><td>1042</td><td>Data_Alteration</td><td>User_Session_Admin_Ex</td><td>INTEGRITY_BROKEN</td></tr>
+                <tr><th>Log_ID</th><th>Event</th><th>Origin_Source</th></tr>
+                <tr><td>301</td><td>Unauthorized Data Modification</td><td>Human Error / Operator Action</td></tr>
             </table>
-
-            <p><strong>Баг у системі:</strong> Визначте джерело загрози та порушений принцип безпеки за аналізом таблиці та теорією:</p>
-            
+            <p><strong>Баг у системі:</strong> Визначте основне джерело порушення безпеки за логами та теорією:</p>
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(1, false)">A) Технічний чинник (перегорання материнської плати), порушено конфіденційність.</button>
-                <button class="option-btn" onclick="checkAnswer(1, true)">B) Людський чинник (навмисні або помилкові дії користувача), порушено цілісність та доступність даних[cite: 3].</button>
-                <button class="option-btn" onclick="checkAnswer(1, false)">C) Природний чинник (стихійне лихо / блискавка), порушено старіння носія[cite: 3].</button>
+                <button class="option-btn" onclick="checkAnswer(1, false)">A) Технічний чинник (перегорання процесора).</button>
+                <button class="option-btn" onclick="checkAnswer(1, true)">B) Людський чинник (помилкові чи навмисні дії користувача або персоналу)[cite: 5].</button>
+                <button class="option-btn" onclick="checkAnswer(1, false)">C) Природний чинник (стихійне лихо / блискавка)[cite: 5].</button>
             </div>
             <div class="feedback" id="feedback-1"></div>
         </div>
@@ -286,28 +292,24 @@
 
     <!-- ЕТАП 2 -->
     <div class="quest-card" id="step-2">
-        <h2>🐛 Етап 2: Знешкодження шкідливого ПЗ (Malware)</h2>
+        <h2>🔒 Етап 2: Порушення властивостей інформації</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Аварійне повідомлення термінала:</strong> У системі зафіксовано підозрілий фоновий процес, який маскується під легітимну утиліту керування і таємно пересилає паролі адміністратора[cite: 4].</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Зловмисник отримав повний адміністративний доступ до керування інформаційною системою[cite: 5].</p>
         </div>
-        
         <div class="theory-box">
-            <p><strong>📖 Теоретичний ключ етапу:</strong> Шкідливе ПЗ включає віруси, черв'яки, трояни та руткіти[cite: 4]. <em>Троянський кінь (Trojan)</em> — це програма, що здійснює прихований несанкціонований доступ і не має механізму самостійного створення копій, на відміну від мережевих черв'яків[cite: 4].</p>
+            <p><strong>📖 Ключ етапу:</strong> Інформаційна безпека базується на захисті трьох ключових властивостей: конфіденційність, цілісність та доступність. Отримання повного контролю над системою та зміна прав користувачів безпосередньо загрожують цим аспектам[cite: 5].</p>
         </div>
-
         <div class="db-simulation">
-            <h3>🗄️ Симуляція активних процесів БД (`active_processes`):</h3>
+            <h3>🗄️ Симуляція прав доступу (`access_control`):</h3>
             <table class="db-table-preview">
-                <tr><th>PID</th><th>Process_Name</th><th>Behavior</th><th>Replication</th></tr>
-                <tr><td>8821</td><td>svchost_update.exe</td><td>Stealing Passwords / Backdoor</td><td>None (No self-copy)</td></tr>
+                <tr><th>User</th><th>Role Assigned</th><th>Security Status</th></tr>
+                <tr><td>Guest_External</td><td>Full System Administrator</td><td>COMPROMISED</td></tr>
             </table>
-
-            <p><strong>Баг у системі:</strong> Класифікуйте шкідливий об'єкт та оберіть правильну команду відновлення:</p>
-            
+            <p><strong>Баг у системі:</strong> Який принцип безпеки порушено при отриманні повного керування системою сторонньою особою?</p>
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(2, false)">A) Мережевий хробак — ізолювати порт та запустити розсилку поштою[cite: 4].</button>
-                <button class="option-btn" onclick="checkAnswer(2, true)">B) Програма-«Троян» (Trojan) — завершити шкідливий процес, очистити автозапуск та оновити паролі доступу[cite: 4].</button>
-                <button class="option-btn" onclick="checkAnswer(2, false)">C) «Жадібна програма» — обмежити використання оперативної пам'яті[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(2, false)">A) Лише старіння носіїв інформації.</button>
+                <button class="option-btn" onclick="checkAnswer(2, true)">B) Конфіденційність, цілісність та доступність інформаційної системи[cite: 5].</button>
+                <button class="option-btn" onclick="checkAnswer(2, false)">C) Фізична цілісність корпусу системного блока.</button>
             </div>
             <div class="feedback" id="feedback-2"></div>
         </div>
@@ -315,28 +317,24 @@
 
     <!-- ЕТАП 3 -->
     <div class="quest-card" id="step-3">
-        <h2>🎣 Етап 3: Протидія соціальній інженерії</h2>
+        <h2>🐛 Етап 3: Мережеві черв'яки (Worms)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Аварійне повідомлення термінала:</strong> Виявлено витік облікових записів персоналу через підроблену сторінку авторизації у корпоративній мережі[cite: 3].</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> У внутрішній мережі зафіксовано лавиноподібне самокопіювання коду через уразливості в операційній системі без участі користувачів[cite: 4].</p>
         </div>
-        
         <div class="theory-box">
-            <p><strong>📖 Теоретичний ключ етапу:</strong> <em>Фішинг</em> — масове розсилання листів або створення підроблених сайтів від імені відомих брендів чи систем із метою отримання персональних даних і доступу до керування ресурсами[cite: 3].</p>
+            <p><strong>📖 Ключ етапу:</strong> *Мережеві хробаки* — різновид шкідливих програм, які проникають на комп'ютер без участі користувача, використовуючи вразливості («дірки») в ПО та автоматично розмножуючись мережами[cite: 4].</p>
         </div>
-
         <div class="db-simulation">
-            <h3>🗄️ Симуляція аналізу мережевого трафіку (`auth_logs`):</h3>
+            <h3>🗄️ Симуляція моніторингу трафіку (`net_worms`):</h3>
             <table class="db-table-preview">
-                <tr><th>Request_ID</th><th>Target_URL</th><th>User_Action</th></tr>
-                <tr><td>901</td><td>edu-college-secure-login-verify.net</td><td>Credentials Submitted (Phishing Trap)</td></tr>
+                <tr><th>Packet_ID</th><th>Propagation_Method</th><th>User_Interaction</th></tr>
+                <tr><td>778</td><td>Exploiting OS Vulnerabilities</td><td>None (Autonomous replication)</td></tr>
             </table>
-
-            <p><strong>Баг у системі:</strong> Який шлях реагування є правильним для захисту бази даних після фішингової атаки?</p>
-            
+            <p><strong>Баг у системі:</strong> Класифікуйте загрозу та оберіть правильну дію для локалізації:</p>
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(3, false)">A) Надіслати хакерам запит на повернення паролів через форму на підробленому сайті.</button>
-                <button class="option-btn" onclick="checkAnswer(3, true)">B) Заблокувати скомпрометовані сесії, внести домен у чорний список firewall та змусити користувачів змінити паролі.</button>
-                <button class="option-btn" onclick="checkAnswer(3, false)">C) Проігнорувати подію, оскільки це лише рекламний спам.</button>
+                <button class="option-btn" onclick="checkAnswer(3, false)">A) Програма-«Троян» — налаштувати перегляд рекламних банерів.</button>
+                <button class="option-btn" onclick="checkAnswer(3, true)">B) Мережевий хробак — ізолювати заражені сегменти мережі та закрити вразливості (патчі ОС)[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(3, false)">C) Спам-розсилка — очистити папку «Вхідні»[cite: 5].</button>
             </div>
             <div class="feedback" id="feedback-3"></div>
         </div>
@@ -344,28 +342,24 @@
 
     <!-- ЕТАП 4 -->
     <div class="quest-card" id="step-4">
-        <h2>💣 Етап 4: Нейтралізація логічної бомби</h2>
+        <h2>🐎 Етап 4: Троянські програми (Trojan Horse)</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Аварійне повідомлення термінала:</strong> Усередині бази даних знайдено прихований тригерний скрипт, налаштований на видалення таблиць при досягненні певної дати[cite: 4].</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Під виглядом корисної утиліти на сервер встановлено прихований компонент, який передає паролі на зовнішній сервер, не створюючи власних копій[cite: 4].</p>
         </div>
-        
         <div class="theory-box">
-            <p><strong>📖 Теоретичний ключ етапу:</strong> <em>«Логічні бомби»</em> (включно з часовими бомбами) — це програмні закладки, які впроваджуються в інформаційні системи та спрацьовують за певних умов або у встановлений час, знищуючи або спотворюючи дані[cite: 4].</p>
+            <p><strong>📖 Ключ етапу:</strong> *Троянський кінь* — шкідлива програма для несанкціонованого доступу, яка не має механізму створення власних копій (на відміну від вірусів), а маскується під корисне ПЗ[cite: 4].</p>
         </div>
-
         <div class="db-simulation">
-            <h3>🗄️ Симуляція тригерів БД (`db_triggers`):</h3>
+            <h3>🗄️ Симуляція процесів (`app_manager`):</h3>
             <table class="db-table-preview">
-                <tr><th>Trigger_ID</th><th>Condition</th><th>Payload_Action</th></tr>
-                <tr><td>TRG_99</td><td>IF DATE >= '2026-06-01'</td><td>DROP DATABASE student_records;</td></tr>
+                <tr><th>App_Name</th><th>Function</th><th>Self-Replication</th></tr>
+                <tr><td>Free_Optimizer.exe</td><td>Hidden Backdoor / Password Grabber</td><td>Disabled (No copies)</td></tr>
             </table>
-
-            <p><strong>Баг у системі:</strong> Оберіть правильний алгоритм дій адміністратора безпеки:</p>
-            
+            <p><strong>Баг у системі:</strong> Визначте тип шкідливого ПЗ і правильний спосіб захисту:</p>
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(4, false)">A) Перевести годинник сервера на рік назад, щоб час бомби ніколи не настав.</button>
-                <button class="option-btn" onclick="checkAnswer(4, true)">B) Провести аудит вихідного коду тригерів, видалити шкідливу закладку та відновити актуальну цілісність з останнього резервного копіювання (бекапу)[cite: 4].</button>
-                <button class="option-btn" onclick="checkAnswer(4, false)">C) Вимкнути інтернет-зв'язок на комп'ютері бухгалтера[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(4, false)">A) Апаратна несправність блоку живлення.</button>
+                <button class="option-btn" onclick="checkAnswer(4, true)">B) Програма-«Троян» — видалити шкідливий процес, перевірити автозапуск та змінити паролі[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(4, false)">C) Стариний магнітний носій даних[cite: 5].</button>
             </div>
             <div class="feedback" id="feedback-4"></div>
         </div>
@@ -373,39 +367,138 @@
 
     <!-- ЕТАП 5 -->
     <div class="quest-card" id="step-5">
-        <h2>🌐 Етап 5: Відбиття DDoS-атаки на шлюз БД</h2>
+        <h2>🎣 Етап 5: Фішинг та підроблені сайти</h2>
         <div class="problem-alert">
-            <p><strong>⚠️ Аварійне повідомлення термінала:</strong> Сервер бази даних перевантажений мільйонами фальшивих запитів із розподіленої мережі ботів (botnet), через що легітимні користувачі не можуть увійти[cite: 3].</p>
+            <p><strong>⚠️ Повідомлення системи:</strong> Масова розсилка листів від імені адміністрації змусила співробітників ввести корпоративні облікові дані на фішинговому сайті[cite: 5].</p>
         </div>
-        
         <div class="theory-box">
-            <p><strong>📖 Теоретичний ключ етапу:</strong> <em>DDoS-атака</em> (Distributed Denial-of-service) — напад на комп'ютерну систему з метою зробити її ресурси недоступними для користувачів, порушуючи властивість <em>доступності</em> інформації[cite: 3].</p>
+            <p><strong>📖 Ключ етапу:</strong> *Фішинг* — масове розсилання електронних листів і створення фальшивих сайтів із метою викрадення персональних даних, паролів та доступу до ресурсів[cite: 5].</p>
         </div>
-
-        .db-simulation">
-            <h3>🗄️ Симуляція мережевого шлюзу (`gateway_traffic`):</h3>
+        <div class="db-simulation">
+            <h3>🗄️ Симуляція звернень до шлюзу (`phishing_logs`):</h3>
             <table class="db-table-preview">
-                <tr><th>Source_IP_Pool</th><th>Request_Rate</th><th>Status</th></tr>
-                <tr><td>194.28.11.0/24 (Botnet)</td><td>550,000 req/sec</td><td>SERVER_OVERLOADED (DoS)</td></tr>
+                <tr><th>URL_Target</th><th>Intended_Goal</th><th>User_Action</th></tr>
+                <tr><td>college-admin-secure-login.net</td><td>Social Engineering / Credential Theft</td><td>Credentials Entered</td></tr>
             </table>
-
-            <p><strong>Баг у системі:</strong> Останній крок! Оберіть технічний захід для відновлення доступності бази даних:</p>
-            
+            <p><strong>Баг у системі:</strong> Оберіть правильну стратегію безпеки проти фішингу:</p>
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(5, false)">A) Вимкнути живлення сервера назавжди.</button>
-                <button class="option-btn" onclick="checkAnswer(5, true)">B) Активувати систему захисту від DDoS, увімкнути фільтрацію трафіку за геозонами/поведінкою та заблокувати бот-мережі[cite: 3].</button>
-                <button class="option-btn" onclick="checkAnswer(5, false)">C) Надіслати скаргу електронною поштою зловмисникам.</button>
+                <button class="option-btn" onclick="checkAnswer(5, false)">A) Надіслати гроші за вказаними в листі реквізитами.</button>
+                <button class="option-btn" onclick="checkAnswer(5, true)">B) Заблокувати фішинговий домен, анулювати скомпрометовані сесії та провести інструктаж персоналу[cite: 5].</button>
+                <button class="option-btn" onclick="checkAnswer(5, false)">C) Увімкнути антивірусне сканування оперативної пам'яті.</button>
             </div>
             <div class="feedback" id="feedback-5"></div>
         </div>
     </div>
 
-    <!-- ФІНАЛЬНИЙ ЕКРАН -->
-    <div class="quest-card congrats" id="step-6">
-        <h2>🎉 База Даних Успішно Врятована!</h2>
-        <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.6;">
-            Вітаємо, кіберзахисники! 🚀 Ви пройшли всі 5 етапів, застосували теоретичні знання, знешкодили трояни, фішинг, логічну бомбу та відбили DDoS-атаку[cite: 3, 4].<br>
-            Система працює стабільно, цілісність даних відновлено! 💻🛡️
+    <!-- ЕТАП 6 -->
+    <div class="quest-card" id="step-6">
+        <h2>💣 Етап 6: Логічні та часові бомби</h2>
+        <div class="problem-alert">
+            <p><strong>⚠️ Повідомлення системи:</strong> У базі даних виявлено прихований программний код, який має активуватися в конкретну дату й знищити таблиці[cite: 4].</p>
+        </div>
+        <div class="theory-box">
+            <p><strong>📖 Ключ етапу:</strong> *Логічна бомба* (або часова бомба) — програма або закладка, яка спрацьовує при настанні певної умови чи часу, знищуючи або спотворюючи інформаційні ресурси[cite: 4].</p>
+        </div>
+        <div class="db-simulation">
+            <h3>🗄️ Симуляція тригерів БД (`triggers_check`):</h3>
+            <table class="db-table-preview">
+                <tr><th>Trigger</th><th>Condition</th><th>Action</th></tr>
+                <tr><td>TRG_BOMB_01</td><td>IF CURRENT_DATE >= '2026-07-01'</td><td>DROP DATABASE records;</td></tr>
+            </table>
+            <p><strong>Баг у системі:</strong> Як знешкодити логічну бомбу в системі?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(6, false)">A) Перевести настільний годинник комп'ютера на 2010 рік.</button>
+                <button class="option-btn" onclick="checkAnswer(6, true)">B) Зробити аудит коду, видалити програмну закладку та відновити актуальну цілісність із резервної копії[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(6, false)">C) Перепідключити мережевий кабель[cite: 4].</button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+        </div>
+    </div>
+
+    <!-- ЕТАП 7 -->
+    <div class="quest-card" id="step-7">
+        <h2>🧟 Етап 7: Програми-зомбі та жадібні програми</h2>
+        <div class="problem-alert">
+            <p><strong>⚠️ Повідомлення системи:</strong> Ресурси сервера вичерпано через фоновий процес, який монополізує процесорний час і таємно залучає систему до атак[cite: 4].</p>
+        </div>
+        <div class="theory-box">
+            <p><strong>📖 Ключ етапу:</strong> *Зомбі* — програми, що приховано підключаються до ПК для запуску атак. *«Жадібні програми»* монополізують системні ресурси, порушуючи доступність інших додатків[cite: 4].</p>
+        </div>
+        <div class="db-simulation">
+            <h3>🗄️ Симуляція завантаження CPU (`resource_monitor`):</h3>
+            <table class="db-table-preview">
+                <tr><th>Process</th><th>CPU_Usage</th><th>Behavior</th></tr>
+                <tr><td>greedy_daemon.exe</td><td>99.8%</td><td>Monopolizing CPU / Remote Botnet Node</td></tr>
+            </table>
+            <p><strong>Баг у системі:</strong> Оберіть дію адміністратора для відновлення доступності:</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(7, false)">A) Залишити процес працювати задля самовираження розробника[cite: 5].</button>
+                <button class="option-btn" onclick="checkAnswer(7, true)">B) Завершити процес-зомбі, обмежити ресурси та перевірити систему фаєрволом[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(7, false)">C) Змінити фоновий малюнок робочого столу.</button>
+            </div>
+            <div class="feedback" id="feedback-7"></div>
+        </div>
+    </div>
+
+    <!-- ЕТАП 8 -->
+    <div class="quest-card" id="step-8">
+        <h2>🔑 Етап 8: Захоплювачі паролів (Password Grabbers)</h2>
+        <div class="problem-alert">
+            <p><strong>⚠️ Повідомлення системи:</strong> Виявлено утиліту прихованого адміністрування та кейлоггер, що перехоплюють натискання клавіш користувачів[cite: 4].</p>
+        </div>
+        <div class="theory-box">
+            <p><strong>📖 Ключ етапу:</strong> *Захоплювачі паролів* та *утиліти прихованого адміністрування (backdoor)* призначені для крадіжки облікових даних і несанкціонованого віддаленого контролю за системою без відома користувача[cite: 4].</p>
+        </div>
+        <div class="db-simulation">
+            <h3>🗄️ Симуляція перехоплення клавіатури (`key_loggers`):</h3>
+            <table class="db-table-preview">
+                <tr><th>Utility</th><th>Target</th><th>Status</th></tr>
+                <tr><td>hook_dll.exe</td><td>Keyboard Buffer / Password Input</td><td>ACTIVE & SNIFFING</td></tr>
+            </table>
+            <p><strong>Баг у системі:</strong> Який комплекс заходів зупинить крадіжку паролів?</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(8, false)">A) Написати паперовий стікер з новим паролем і наклеїти на монітор.</button>
+                <button class="option-btn" onclick="checkAnswer(8, true)">B) Просканувати систему антивірусом, видалити бекдор, завершити шкідливі хуки та оновити паролі[cite: 4].</button>
+                <button class="option-btn" onclick="checkAnswer(8, false)">C) Перезавантажити браузер.</button>
+            </div>
+            <div class="feedback" id="feedback-8"></div>
+        </div>
+    </div>
+
+    <!-- ЕТАП 9 -->
+    <div class="quest-card" id="step-9">
+        <h2>🌐 Етап 9: DDoS-атаки (Розподілені атаки на відмову в обслуговуванні)</h2>
+        <div class="problem-alert">
+            <p><strong>⚠️ Повідомлення системи:</strong> Вхідний шлюз бази даних завалено мільйонами запитів з ботнет-мережі, легітимні користувачі не можуть підключитися[cite: 5].</p>
+        </div>
+        <div class="theory-box">
+            <p><strong>📖 Ключ етапу:</strong> *DDoS-атака* (Denial-of-service) — напад на систему з метою зробити її ресурси недоступними для користувачів, для яких вона призначена (руйнування *доступності*)[cite: 5].</p>
+        </div>
+        <div class="db-simulation">
+            <h3>🗄️ Симуляція шлюзу трафіку (`gateway_ddos`):</h3>
+            <table class="db-table-preview">
+                <tr><th>Source_Pool</th><th>Request_Volume</th><th>Impact</th></tr>
+                <tr><td>Distributed Botnet (IPs)</td><td>1,200,000 req/sec</td><td>SERVICE UNAVAILABLE (DoS)</td></tr>
+            </table>
+            <p><strong>Баг у системі:</strong> Оберіть інструмент протидії DDoS-атаці:</p>
+            <div class="options-grid">
+                <button class="option-btn" onclick="checkAnswer(9, false)">A) Вимкнути серверний маршрутизатор назавжди.</button>
+                <button class="option-btn" onclick="checkAnswer(9, true)">B) Підключити систему фільтрації трафіку (Anti-DDoS), заблокувати аномальні бот-мережі та стабілізувати доступність[cite: 5].</button>
+                <button class="option-btn" onclick="checkAnswer(9, false)">C) Надіслати електронного листа з проханням припинити напад[cite: 5].</button>
+            </div>
+            <div class="feedback" id="feedback-9"></div>
+        </div>
+    </div>
+
+    <!-- ЕТАП 10 (ФІНАЛ) -->
+    <div class="quest-card congrats" id="step-10">
+        <h2>🎉 Пост-аудит та Фінал Квесту!</h2>
+        <div class="theory-box" style="text-align: left; margin-bottom: 20px;">
+            <p><strong>📖 Підсумковий ключ:</strong> Ви успішно пройшли всі 10 етапів симуляції інформаційної безпеки! Продемонстровано знання джерел загроз, шкідливого ПЗ (троянів, черв'яків, бомб), методів соціальної інженерії та захисту від DDoS[cite: 4, 5].</p>
+        </div>
+        <p style="margin: 15px 0; font-size: 1.1rem; line-height: 1.5;">
+            Повну цілісність, конфіденційність та доступність Центральної Бази Даних відновлено! 🚀<br>
+            Ви готові до захисту реальних інформаційних систем на найвищому рівні! 💻🛡️🔥
         </p>
         <button class="next-step-btn" onclick="location.reload()">🔄 Пройти квест знову</button>
     </div>
@@ -421,14 +514,14 @@
             buttons.forEach(btn => btn.style.pointerEvents = 'none');
             let nextStepNum = step + 1;
             
-            feedback.innerHTML = `✅ Успішно! Проблема вирішена, системний файл оновлено.<br><br>
+            feedback.innerHTML = `✅ Баг успішно усунуто! Система стабільна.<br><br>
                 <button class="next-step-btn" onclick="nextStep(${nextStepNum})">Перейти до наступного етапу ➔</button>`;
             feedback.className = "feedback correct";
             feedback.style.display = "block";
             
             document.getElementById(`ind-${step}`).classList.add('completed');
         } else {
-            feedback.textContent = "❌ Помилка в коді рішення! База даних залишається під загрозою. Проаналізуйте теорію та спробуйте ще раз.";
+            feedback.textContent = "❌ Помилка у виборі рішення! Загроза залишається активною. Проаналізуйте теорію та спробуйте ще раз.";
             feedback.className = "feedback incorrect";
             feedback.style.display = "block";
         }
@@ -448,7 +541,7 @@
             targetCard.classList.add('active-card');
         }
         
-        if (stepNumber <= 5) {
+        if (stepNumber <= 10) {
             const targetInd = document.getElementById(`ind-${stepNumber}`);
             if (targetInd) {
                 targetInd.classList.add('active');
