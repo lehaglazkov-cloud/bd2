@@ -165,8 +165,8 @@
 
         .feedback {
             margin-top: 15px;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 15px;
+            border-radius: 8px;
             font-weight: bold;
             display: none;
         }
@@ -183,20 +183,20 @@
             border: 1px solid var(--accent-red);
         }
 
-        .next-btn {
+        .next-step-btn {
             background: var(--accent-green);
             color: #000;
             font-weight: bold;
             border: none;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
-            margin-top: 20px;
-            display: none;
+            margin-top: 12px;
+            display: inline-block;
             transition: opacity 0.2s;
         }
 
-        .next-btn:hover {
+        .next-step-btn:hover {
             opacity: 0.9;
         }
 
@@ -224,165 +224,19 @@
         <div class="step-indicator active" id="ind-1">Крок 1: Загрози</div>
         <div class="step-indicator" id="ind-2">Крок 2: Шкідливе ПЗ</div>
         <div class="step-indicator" id="ind-3">Крок 3: Фішинг</div>
-        <div class="step-indicator" id="ind-4">Крок 4: Логічна бомба</div>
-        <div class="step-indicator" id="ind-5">Крок 5: Атака DoS</div>
+        <div class="step-indicator" id="ind-4">Крок 4: Лог. бомба</div>
+        <div class="step-indicator" id="ind-5">Крок 5: DoS атака</div>
     </div>
 
     <!-- ЕТАП 1 -->
     <div class="quest-card active-card" id="step-1">
         <h2>📌 Крок 1: Класифікація загроз та джерел</h2>
         <div class="theory-box">
-            <p><strong>📖 Ключ-теорія:</strong> Загрози інформаційній безпеці поділяються за джерелами на природні, технічні та людські чинники. Людські чинники (помилки користувачів або навмисні дії) становлять найбільший відсоток порушень (50-80%). Згідно із цілями впливу, порушуються властивості інформації: <em>конфіденційність, цілісність та доступність</em>.</p>
+            <p><strong>📖 Ключ-теорія:</strong> Загрози інформаційній безпеці поділяються за джерелами на природні, технічні та людські чинники. Людські чинники (помилки користувачів або навмисні дії) становлять найбільший відсоток порушень (50-80%)[cite: 1]. Згідно із цілями впливу, порушуються властивості інформації: <em>конфіденційність, цілісність та доступність</em>[cite: 1].</p>
         </div>
         <div class="simulation-box">
             <h3>⚠️ Симуляція інциденту №1 (Баг системи):</h3>
             <p>Бухгалтер підприємства випадково відкрив підозрілий додаток до листа від невідомого відправника, внаслідок чого заблокувався доступ до корпоративної бази даних із вимогою викупу. Який це тип джерела загрози та який принцип безпеки порушено?[cite: 1]</p>
             
             <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(1, false)">A) Природний чинник (блискавка), порушено доступність.</button>
-                <button class="option-btn" onclick="checkAnswer(1, true)">B) Людський чинник (ненавмисні/навмисні дії), порушено доступність та цілісність даних.</button>
-                <button class="option-btn" onclick="checkAnswer(1, false)">C) Технічний чинник (перепад напруги обладнання).</button>
-            </div>
-            <div class="feedback" id="feedback-1"></div>
-        </div>
-        <button class="next-btn" id="next-1" onclick="nextStep(2)">Перейти до Кроку 2 ➔</button>
-    </div>
-
-    <!-- ЕТАП 2 -->
-    <div class="quest-card" id="step-2">
-        <h2>🐛 Крок 2: Шкідливе програмне забезпечення (Malware)</h2>
-        <div class="theory-box">
-            <p><strong>📖 Ключ-теорія:</strong> Шкідливе ПЗ включає віруси, черв'яки, трояни, руткіти тощо[cite: 2]. <em>Черв'яки</em> самостійно поширюються мережами, використовуючи вразливості ОС без участі користувача. <em>Трояни</em> маскуються під корисні програми для прихованого несанкціонованого доступу, але не розмножуються самостійно[cite: 2].</p>
-        </div>
-        <div class="simulation-box">
-            <h3>⚠️ Симуляція інциденту №2 (Баг системи):</h3>
-            <p>У системі моніторингу зафіксовано програму, яка не створює своїх копій, але таємно передає зловмиснику паролі доступу та відкриває бекдор (прихований люк). Як класифікується цей об'єкт і як діяти адміністратору?[cite: 2]</p>
-            
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(2, false)">A) Мережевий хробак — ізолювати сегмент мережі та оновити антивірусні базні сигнатури.</button>
-                <button class="option-btn" onclick="checkAnswer(2, true)">B) Програма-«Троян» (Trojan) із функцією захоплення паролів — заблокувати процес, просканувати систему сканером та змінити облікові дані.</button>
-                <button class="option-btn" onclick="checkAnswer(2, false)">C) «Жадібна програма» (greedy program) — обмежити її в процесорному часі.</button>
-            </div>
-            <div class="feedback" id="feedback-2"></div>
-        </div>
-        <button class="next-btn" id="next-2" onclick="nextStep(3)">Перейти до Кроку 3 ➔</button>
-    </div>
-
-    <!-- ЕТАП 3 -->
-    <div class="quest-card" id="step-3">
-        <h2>🎣 Крок 3: Соціальна інженерія та фішинг</h2>
-        <div class="theory-box">
-            <p><strong>📖 Ключ-теорія:</strong> <em>Фішинг</em> — масове розсилання листів від імені популярних брендів/сервісів з метою крадіжки персональних даних, паролів та доступу до фінансових рахунків[cite: 1]. Спеціальні фальшиві сайти створюються саме для соціальної інженерії.</p>
-        </div>
-        <div class="simulation-box">
-            <h3>⚠️ Симуляція інциденту №3 (Баг системи):</h3>
-            <p>Співробітник отримав терміновий лист нібито від «служби безпеки банку» з вимогою перейти за посиланням `secure-bank-login-update.com` і ввести свої облікові дані для підтвердження рахунку. Ваші дії?[cite: 1]</p>
-            
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(3, false)">A) Швидко ввести дані, оскільки лист позначено як «Терміново».</button>
-                <button class="option-btn" onclick="checkAnswer(3, true)">B) Проігнорувати посилання, не вводити жодних даних, повідомити ІТ-відділ про спробу фішингу.</button>
-                <button class="option-btn" onclick="checkAnswer(3, c=false)">C) Переслати цей лист усім колегам для перевірки.</button>
-            </div>
-            <div class="feedback" id="feedback-3"></div>
-        </div>
-        <button class="next-btn" id="next-3" onclick="nextStep(4)">Перейти до Кроку 4 ➔</button>
-    </div>
-
-    <!-- ЕТАП 4 -->
-    <div class="quest-card" id="step-4">
-        <h2>💣 Крок 4: Логічні та часові бомби</h2>
-        <div class="theory-box">
-            <p><strong>📖 Ключ-теорія:</strong> <em>«Логічні бомби»</em> — невеликі програмні закладки, які впроваджуються в систему і спрацьовують лише при настанні певної події чи часу (часова бомба), після чого виводять систему з ладу або знищують дані[cite: 2].</p>
-        </div>
-        <div class="simulation-box">
-            <h3>⚠️ Симуляція інциденту №4 (Баг системи):</h3>
-            <p>Звільнений розробник залишив у корпоративному ПЗ прихований код, який має автоматично видалити базу даних 1-го числа наступного місяця, якщо не буде надіслано спеціальний цифровий код-сигнал. Що необхідно зробити адміністратору?[cite: 2]</p>
-            
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(4, true)">B) Провести аудит вихідного коду (code review), виявити аномальні тригери та видалити програмну закладку, паралельно зробивши резервну копію (бекап).</button>
-                <button class="option-btn" onclick="checkAnswer(4, false)">A) Просто змінити пароль адміністратора домену.</button>
-                <button class="option-btn" onclick="checkAnswer(4, false)">C) Увімкнути звичайний брандмауер (Firewall).</button>
-            </div>
-            <div class="feedback" id="feedback-4"></div>
-        </div>
-        <button class="next-btn" id="next-4" onclick="nextStep(5)">Перейти до Кроку 5 ➔</button>
-    </div>
-
-    <!-- ЕТАП 5 -->
-    <div class="quest-card" id="step-5">
-        <h2>🌐 Крок 5: Атаки на відмову в обслуговуванні (DoS / DDoS)</h2>
-        <div class="theory-box">
-            <p><strong>📖 Ключ-теорія:</strong> <em>DDoS-атака</em> (Distributed Denial-of-service) — напад на комп'ютерну систему з наміром зробити її ресурси недоступними для легітимних користувачів шляхом перевантаження запитами з бот-мереж (botnet)[cite: 1].</p>
-        </div>
-        <div class="simulation-box">
-            <h3>⚠️ Симуляція інциденту №5 (Баг системи):</h3>
-            <p>Корпоративний вебсайт освітнього закладу раптово почав отримувати мільйони запитів за секунду з тисяч IP-адрес по всьому світу, через що сервер «ліг» і користувачі не можуть увійти. Оберіть правильний шлях протидії[cite: 1]:</p>
-            
-            <div class="options-grid">
-                <button class="option-btn" onclick="checkAnswer(5, false)">A) Вимкнути інтернет-кабель назавжди.</button>
-                <button class="option-btn" onclick="checkAnswer(5, true)">B) Підключити систему захисту від DDoS (наприклад, Cloudflare / фільтрацію трафіку за геозонами та поведінковими факторами) і заблокувати аномальні бот-мережі.</button>
-                <button class="option-btn" onclick="checkAnswer(5, false)">C) Надіслати лист з вимогою припинити атаку на пошту хакерів.</button>
-            </div>
-            <div class="feedback" id="feedback-5"></div>
-        </div>
-        <button class="next-btn" id="next-5" onclick="nextStep(6)">Завершити квест 🎉</button>
-    </div>
-
-    <!-- ФІНАЛ -->
-    <div class="quest-card congrats" id="step-6">
-        <h2>🏆 Вітаємо! Ви успішно пройшли квест!</h2>
-        <p style="margin: 20px 0; font-size: 1.1rem; line-height: 1.6;">
-            Ви чудово впоралися з аналізом загроз, розпізнали шкідливе ПЗ, протистояли фішингу, знешкодили логічну бомбу та відбили DDoS-атаку! 🚀<br>
-            Ваші знання з інформаційної безпеки повністю відповідають рівню сучасного фахівця! 💻🔥
-        </p>
-        <button class="next-btn" style="display: inline-block;" onclick="location.reload()">🔄 Пройти квест знову</button>
-    </div>
-</div>
-
-<script>
-    function checkAnswer(step, isCorrect) {
-        const feedback = document.getElementById(`feedback-${step}`);
-        const nextBtn = document.getElementById(`next-${step}`);
-        
-        // Вимикаємо кнопки після вибору на поточному кроці
-        const card = document.getElementById(`step-${step}`);
-        const buttons = card.querySelectorAll('.option-btn');
-        buttons.forEach(btn => btn.style.pointerEvents = 'none');
-
-        if (isCorrect) {
-            feedback.textContent = "✅ Правильно! Ви обрали безпечний та ефективний шлях дій.";
-            feedback.className = "feedback correct";
-            feedback.style.display = "block";
-            nextBtn.style.display = "inline-block";
-            
-            // Оновлюємо індикатор
-            document.getElementById(`ind-${step}`).classList.add('completed');
-        } else {
-            feedback.textContent = "❌ Помилка у виборі! Це призведе до ускладнення інциденту. Спробуйте оновити сторінку та обрати іншу стратегію.";
-            feedback.className = "feedback incorrect";
-            feedback.style.display = "block";
-        }
-    }
-
-    function nextStep(stepNumber) {
-        // Ховаємо всі картки
-        document.querySelectorAll('.quest-card').forEach(card => {
-            card.classList.remove('active-card');
-        });
-        
-        // Прибираємо активний клас з індикаторів
-        document.querySelectorAll('.step-indicator').forEach(ind => {
-            ind.classList.remove('active');
-        });
-
-        // Показуємо потрібну картку
-        document.getElementById(`step-${stepNumber}`).classList.add('active-card');
-        
-        if(stepNumber <= 5) {
-            document.getElementById(`ind-${stepNumber}`).classList.add('active');
-        }
-    }
-</script>
-
-</body>
-</html>
+                <button class="option-btn" onclick="checkAnswer(1, false)">A) Природний чи
