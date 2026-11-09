@@ -3,22 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IT-Квест: Види сучасних комп’ютерів</title>
+    <title>КіберВарта: Інформаційна Безпека 11 Клас</title>
     <style>
         :root {
             --bg-color: #0d1117;
-            --panel-bg: #161b22;
-            --accent-blue: #58a6ff;
-            --success-green: #2ea44f;
-            --text-main: #c9d1d9;
+            --card-bg: #161b22;
+            --accent-color: #58a6ff;
+            --text-color: #c9d1d9;
+            --text-muted: #8b949e;
+            --success-color: #238636;
+            --error-color: #da3633;
             --border-color: #30363d;
-            --selected-bg: #1f242c;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -27,276 +28,194 @@
             min-height: 100vh;
         }
 
-        .quest-container {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+        .container {
             max-width: 700px;
             width: 100%;
-            padding: 32px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
 
-        .header {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-            margin-bottom: 24px;
+        h1 {
+            color: var(--accent-color);
             text-align: center;
-        }
-
-        .header h1 {
-            color: var(--accent-blue);
             font-size: 24px;
-            margin: 0 0 8px 0;
-        }
-
-        .graphic-container {
-            background: linear-gradient(135deg, #1f242c 0%, #0d1117 100%);
-            border: 2px dashed var(--border-color);
-            border-radius: 6px;
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .vector-art {
-            font-size: 70px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
+            margin-top: 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
         }
 
         .progress-bar {
-            background-color: #21262d;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 24px;
+            background-color: var(--border-color);
+            height: 6px;
+            border-radius: 3px;
+            margin-bottom: 25px;
             overflow: hidden;
         }
 
         .progress-fill {
-            background-color: var(--accent-blue);
+            background-color: var(--accent-color);
             height: 100%;
-            width: 0%;
-            transition: width 0.4s ease;
+            width: 20%;
+            transition: width 0.3s ease;
         }
 
-        .story-text {
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-            animation: fadeInText 0.6s ease-out forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeInText {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 24px;
-        }
-
-        .btn-github {
-            background-color: #21262d;
-            color: var(--text-main);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 14px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .btn-github:hover {
-            background-color: #30363d;
-            border-color: #8b949e;
-            color: #ffffff;
-        }
-
-        .btn-github.selected {
-            background-color: var(--selected-bg);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
-        }
-
-        .badge {
-            background-color: var(--border-color);
-            color: var(--text-main);
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 11px;
-        }
-
-        .action-container {
-            display: flex;
-            justify-content: flex-end;
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
-        }
-
-        .btn-action {
-            background-color: var(--success-green);
-            color: #ffffff;
-            border: 1px solid rgba(240,246,252,0.1);
-            padding: 12px 28px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-        }
-
-        .btn-action:hover {
-            background-color: #2c974b;
-        }
-
-        .btn-action:active {
-            transform: scale(0.98);
-        }
-
-        .btn-action:disabled {
-            background-color: #21262d;
-            color: #8b949e;
-            cursor: not-allowed;
-            border-color: var(--border-color);
-        }
-
-        .screen {
+        .step {
             display: none;
         }
-        .screen.active {
+
+        .step.active {
             display: block;
         }
-        .center-screen {
+
+        .scenario {
+            background-color: rgba(88, 166, 255, 0.05);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .option-item {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(88, 166, 255, 0.02);
+        }
+
+        .option-item.selected {
+            border-color: var(--accent-color);
+            background-color: rgba(88, 166, 255, 0.1);
+        }
+
+        .feedback {
+            display: none;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .feedback.correct {
+            display: block;
+            background-color: rgba(35, 134, 54, 0.15);
+            border: 1px solid var(--success-color);
+            color: #56d364;
+        }
+
+        .feedback.incorrect {
+            display: block;
+            background-color: rgba(218, 54, 51, 0.15);
+            border: 1px solid var(--error-color);
+            color: #ffa198;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #408ee0;
+        }
+
+        button:disabled {
+            background-color: var(--border-color);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .result-screen {
             text-align: center;
+            display: none;
+        }
+
+        .result-screen h2 {
+            color: #56d364;
+        }
+
+        .icon {
+            font-size: 50px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
 
-<div class="quest-container">
-
-    <!-- 1. ЕКРАН СТАРТУ -->
-    <div id="start-screen" class="screen active center-screen">
-        <div class="header">
-            <h1>IT-Квест: Види сучасних комп’ютерів</h1>
-            <span class="badge">Урок 16</span>
-        </div>
-        <div class="graphic-container">
-            <div class="vector-art">⚡🚀🖥️</div>
-        </div>
-        <div class="story-text" style="opacity: 1;">
-            Привіт, майбутній інженере! Проаналізувавши презентацію «Нової української школи», ми дізналися, як стрімко розвиваються технології — від смартфонів у кишені до ексафлопсних суперкомп'ютерів як Frontier. <br><br>
-            Готовий пройти випробування, перевірити знання та зібрати свій перший збалансований ПК? 
-        </div>
-        <button class="btn-action" style="font-size: 18px; width: 100%; padding: 16px;" onclick="startQuest()">Розпочати квест ➔</button>
+<div class="container">
+    <h1>🕵️‍♂️ КіберВарта: Інформаційна безпека (11 клас)</h1>
+    
+    <div class="progress-bar" id="progressBarContainer">
+        <div class="progress-fill" id="progressFill"></div>
     </div>
 
-    <!-- 2. ІГРОВИЙ ЕКРАН КРОКІВ -->
-    <div id="quest-screen" class="screen">
-        <div class="header">
-            <h1 id="step-title">Назва кроку</h1>
-            <span class="badge" id="step-counter">Крок 1 з 5</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress"></div>
-        </div>
-
-        <div class="graphic-container">
-            <div class="vector-art" id="graphic">🖥️</div>
-        </div>
-
-        <div class="story-text" id="quest-text">
-            Текст запитання...
-        </div>
-
-        <div class="options-grid" id="options">
-            <!-- Варіанти відповіді -->
-        </div>
-
-        <div class="action-container">
-            <button class="btn-action" id="next-btn" onclick="goToNextStep()" disabled>Далі ➔</button>
-        </div>
+    <!-- КРОК 1 -->
+    <div class="step active" id="step1">
+        <h3>Крок 1: Атака на відмову в обслуговуванні</h3>
+        <p class="scenario"><strong>Баг:</strong> Вебсайт вашої школи раптово перестав відкриватися. Адміністратор помітив мільйони одночасних фальшивих запитів до сервера з різних комп'ютерів по всьому світу. Яка загроза реалізується та як діяти?</p>
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(1, 'A')"><strong>А:</strong> Це робота поштових хробаків; потрібно терміново почистити поштові скриньки всіх учнів.</li>
+            <li class="option-item" onclick="selectOption(1, 'B')"><strong>Б:</strong> Це DDoS-атака; необхідно задіяти технічні засоби захисту для фільтрації трафіку та придушення фальшивих запитів.</li>
+            <li class="option-item" onclick="selectOption(1, 'V')"><strong>В:</strong> Це природний чинник; обладнання перегрілося, треба просто зачекати.</li>
+        </ul>
+        <div class="feedback" id="feedback1"></div>
+        <button id="btn1" onclick="checkAnswer(1, 'B', 'Правильно! За презентацією, DDoS-атака — це напад на комп’ютерну систему з наміром зробити ресурси недоступними користувачам. Для захисту задіяні засоби придушення шкідливого обміну в мережах.', 'Неправильно. Помилкові дії людей або перегрів тут ні до чого. Масовий напад з метою зробити ресурс недоступним — це класична DDoS-атака.')">Перевірити відповідь</button>
     </div>
 
-    <!-- 3. ЕКРАН ФІНІШУ -->
-    <div id="result-screen" class="screen center-screen">
-        <div class="header">
-            <h1 style="color: var(--success-green)">Збірку успішно завершено! 🎉</h1>
-        </div>
-        <div class="vector-art" style="font-size: 90px; margin: 20px 0;">🥇⚡💻</div>
-        <div class="story-text" id="result-text" style="opacity: 1;">
-            Фінальний результат...
-        </div>
-        <button class="btn-action" style="background-color: var(--accent-blue);" onclick="restartQuest()">Спробувати знову ↻</button>
+    <!-- КРОК 2 -->
+    <div class="step" id="step2">
+        <h3>Крок 2: Таємнича «Троянська» загроза</h3>
+        <p class="scenario"><strong>Баг:</strong> Ви завантажили з невідомого ресурсу корисну утиліту для оптимізації системи. Програма працює чудово, але ви помітили, що в фоновому режимі хтось намагається скопіювати файли з вашими паролями. Що це за шкідливе ПЗ?</p>
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(2, 'A')"><strong>А:</strong> Це «Троянський кінь» — він зберігає працездатність програми, але виконує незадокументовані функції (пересилає паролі).</li>
+            <li class="option-item" onclick="selectOption(2, 'B')"><strong>Б:</strong> Це «Мережевий хробак», який самостійно розмножується комп'ютерною мережею.</li>
+            <li class="option-item" onclick="selectOption(2, 'V')"><strong>В:</strong> Це «Жадібна програма», яка просто хоче загарбати всю оперативну пам'ять комп'ютера.</li>
+        </ul>
+        <div class="feedback" id="feedback2"></div>
+        <button id="btn2" onclick="checkAnswer(2, 'A', 'Ідеально! Згідно з матеріалами, «Троянський кінь» таємно вводиться у чужі або свої програми для виконання додаткових функцій (наприклад, крадіжки паролів) зі збереженням працездатності.', 'Ні. Мережні хробаки розмножуються самі через дірки в ОС, а жадібні програми монополізують ресурси. Прихована крадіжка даних під виглядом легітимного софту — це функція Трояна.')">Перевірити відповідь</button>
     </div>
 
-</div>
+    <!-- КРОК 3 -->
+    <div class="step" id="step3">
+        <h3>Крок 3: Цифрова бомба уповільненої дії</h3>
+        <p class="scenario"><strong>Баг:</strong> Системний адміністратор комерційної фірми посварився з керівництвом і перед звільненням вмонтував у код бухгалтерської бази даних невеликий прихований шматок коду. Він налаштований так, що 1-го числа наступного місяця база повністю зітреться. З чим ми маємо справу?</p>
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(3, 'A')"><strong>А:</strong> Звичайний спам, який забиває систему непотрібною рекламою.</li>
+            <li class="option-item" onclick="selectOption(3, 'B')"><strong>Б:</strong> Людина просто випадково помилилася, це ненавмисний людський чинник.</li>
+            <li class="option-item" onclick="selectOption(3, 'V')"><strong>В:</strong> Це «Логічна бомба» (а саме її різновид — «часова бомба»), яка спрацьовує за певних умов або у встановлений час.</li>
+        </ul>
+        <div class="feedback" id="feedback3"></div>
+        <button id="btn3" onclick="checkAnswer(3, 'V', 'Точно! У презентації зазначено, що «Логічні бомби» — це програми, що спрацьовують з настанням певних умов, а «часова бомба» приводиться в дію у встановлений час, стираючи чи перекручуючи інформацію.', 'Помилка. Спам — це лише реклама. Оскільки дії адміністратора були цілеспрямованими та завчасними — це шкідлива програмна закладка під назвою «Логічна/Часова бомба».')">Перевірити відповідь</button>
+    </div>
 
-<script>
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-    function playSound(type) {
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        if (type === 'click') {
-            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        } else if (type === 'select') {
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.08);
-        } else if (type === 'success') {
-            const now = audioCtx.currentTime;
-            [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
-                const o = audioCtx.createOscillator();
-                const g = audioCtx.createGain();
-                o.connect(g); g.connect(audioCtx.destination);
-                o.frequency.setValueAtTime(freq, now + i*0.08);
-                g.gain.setValueAtTime(0.05, now + i*0.08);
-                g.gain.exponentialRampToValueAtTime(0.001, now + i*0.08 + 0.4);
-                o.start(now + i*0.08);
-                o.stop(now + i*0.08 + 0.4);
-            });
-        }
-    }
-
-    const questData = {
-        1: {
-            title: "Крок 1: Визначення призначення комп'ютера",
-            graphic: "🏗️",
-            text: "Персональні комп'ютери за основним призначенням поділяються на різні категорії. Для яких завдання ми розробляємо поточну збірку?",
-            progress: "20%",
-            options: [
-                { text: "Потужний ігровий комп'ютер (високі вимоги до графіки)", score: "game" },
-                { text: "Офісний / Домашній ПК для навчання та фінансів", score: "office" },
+    <!-- КРОК 4 -->
+    <div class="step" id="step4">
+        <h3>Крок 4: Загроза конфіденційності (Фішинг)</h3>
+        <p class="scenario"><strong>Баг:</strong> На електронну пошту прийшов лист від імені популярного банку, де користувача просять негайно перейти на дзеркало сайту та підтвердити свій пароль, щоб уникнути блокування рахунку. Мета сайту — отримати доступ до персональних даних. Що це за явище?</p>
+        <ul class="options-list">
+            <li class="option-item" onclick="selectOption(4, 'A')"><strong>А:</strong> Комп'ютерне піратство.</li>
